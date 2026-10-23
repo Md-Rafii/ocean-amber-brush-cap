@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Information Report - Demo</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  padding:15px;
+  background:#e7e7e7;
+  color:#333;
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+  font-size:12px
+}
+
+.page{
+  width:100%;
+  max-width:850px;
+  min-height:1120px;
+  margin:auto;
+  background:#fff;
+  box-shadow:0 1px 8px #bbb;
+  position:relative
+}
+
+.header{
+  min-height:120px;
+  background:linear-gradient(#c4d0c5,#214b32);
+  display:flex;
+  align-items:center;
+  padding:10px 25px;
+  gap:20px;
+  color:white
+}
+
+.logo-circle{
+  width:125px;
+  height:125px;
+  flex-shrink:0;
+  border-radius:50%;
+  background:#f5f7f2;
+  display:flex;
+  align-items:center;
+  justify-content:center
+}
+
+.logo-inner{
+  width:70px;
+  height:70px;
+  border:1px solid #315e43;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#315e43;
+  font-size:9px
+}
+
+.heading{
+  flex:1;
+  text-align:center
+}
+
+.heading h1{
+  font-size:20px;
+  font-weight:500;
+  margin:0 0 7px
+}
+
+.heading p{
+  color:#fff36a;
+  font-size:13px;
+  margin:0
+}
+
+.search-area{
+  position:relative;
+  padding:10px 15px 18px;
+  border-bottom:1px solid #eee;
+  text-align:center
+}
+
+.search-title{
+  color:#79516c;
+  font-size:13px;
+  margin-bottom:5px
+}
+
+.category{
+  margin:3px;
+  color:#777;
+  font-size:10px
+}
+
+.search-form{
+  margin-top:10px;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:center;
+  gap:5px
+}
+
+.search-form label{
+  color:#754b5d;
+  font-size:10px
+}
+
+.search-form input{
+  width:125px;
+  height:25px;
+  border:1px solid #ddd;
+  padding:4px;
+  font-size:11px
+}
+
+.search-form button{
+  background:#229b50;
+  color:white;
+  border:0;
+  padding:7px 12px;
+  font-size:10px
+}
+
+.menu{
+  position:absolute;
+  top:130px;
+  right:15px;
+  background:#1683d7;
+  color:white;
+  border:0;
+  padding:5px 13px;
+  font-size:9px
+}
+
+.report-content{
+  display:grid;
+  grid-template-columns:125px minmax(0,1fr);
+  gap:15px;
+  padding:28px 35px 100px
+}
+
+.left-column{
+  text-align:center
+}
+
+.photo{
+  width:105px;
+  height:130px;
+  margin:5px auto 10px;
+  border:1px solid #d7d7d7;
+  background:#f1f1f1;
+  border-radius:7px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  color:#666
+}
+
+.head-shape{
+  width:42px;
+  height:42px;
+  background:#b9b9b9;
+  border-radius:50%;
+  margin-bottom:5px
+}
+
+.body-shape{
+  width:54px;
+  height:35px;
+  background:#b9b9b9;
+  border-radius:25px 25px 12px 12px
+}
+
+.photo small{
+  font-size:8px;
+  margin-top:7px
+}
+
+.person-name{
+  font-size:11px;
+  margin:10px 0 22px;
+  overflow-wrap:anywhere
+}
+
+.qr{
+  width:105px;
+  height:105px;
+  display:block;
+  margin:auto
+}
+
+.details{min-width:0}
+
+.section-title{
+  background:#b8e1e2;
+  padding:6px 8px;
+  font-weight:bold;
+  font-size:12px;
+  margin:0 0 3px
+}
+
+.info-row{
+  display:grid;
+  grid-template-columns:42% 58%;
+  min-height:23px;
+  border-bottom:1px solid #ededed;
+  align-items:center;
+  padding:4px;
+  font-size:10px
+}
+
+.info-row span{
+  overflow-wrap:anywhere
+}
+
+.address{
+  padding:7px 5px 24px;
+  min-height:60px;
+  line-height:1.8;
+  font-size:10px;
+  overflow-wrap:anywhere
+}
+
+.watermark{
+  border-top:1px solid #eee;
+  margin-top:4px;
+  padding:17px 5px;
+  text-align:center;
+  font-size:7px;
+  color:#a66b6b
+}
+
+.watermark small{
+  display:block;
+  color:#777;
+  margin-top:5px
+}
+
+.footer{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  min-height:50px;
+  background:#f5f5f5;
+  border-top:1px solid #ddd;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px
+}
+
+.footer button{
+  padding:8px 15px;
+  color:white;
+  border:0;
+  border-radius:4px;
+  font-size:11px
+}
+
+.back{background:#555}
+.download{background:#1685d5}
+
+@media(max-width:520px){
+  body{padding:8px}
+  .page{min-height:950px}
+  .header{min-height:105px;padding:8px;gap:8px}
+  .logo-circle{width:78px;height:78px}
+  .logo-inner{width:50px;height:50px;font-size:7px}
+  .heading h1{font-size:15px}
+  .heading p{font-size:10px}
+  .search-area{padding:10px 6px 16px}
+  .search-form{gap:4px}
+  .search-form input{width:100px}
+  .report-content{
+    grid-template-columns:100px minmax(0,1fr);
+    gap:7px;
+    padding:26px 10px 85px
+  }
+  .photo{width:95px;height:125px}
+  .qr{width:85px;height:85px}
+  .info-row{font-size:9px;padding:5px 3px}
+  .section-title{font-size:11px;padding:6px}
+  .address{font-size:9px}
+  .menu{top:114px;right:8px}
+}
+
+@media print{
+  @page{size:A4;margin:0}
+  body{padding:0;background:white}
+  .page{
+    width:210mm;
+    min-height:297mm;
+    max-width:none;
+    margin:0;
+    box-shadow:none
+  }
+  .footer{display:none}
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+
+  <header class="header">
+    <div class="logo-circle">
+      <div class="logo-inner">YOUR<br>LOGO</div>
+    </div>
+    <div class="heading">
+      <h1>Bangladesh Information Portal</h1>
+      <p>Digital Information Registration System</p>
+    </div>
+  </header>
+
+  <button class="menu" type="button">Menu</button>
+
+  <section class="search-area">
+    <div class="search-title">Select Your Search Category</div>
+    <div class="category">
+      <label><input type="radio" name="category" checked>
+      Search by Reference No.</label>
+    </div>
+    <div class="category">
+      <label><input type="radio" name="category">
+      Search by Form No.</label>
+    </div>
+
+    <div class="search-form">
+      <label for="reference">Reference No*</label>
+      <input id="reference" type="text" placeholder="Reference No">
+      <input id="searchDate" type="date" aria-label="Date">
+      <button type="button">Search</button>
+    </div>
+  </section>
+
+  <main class="report-content">
+    <aside class="left-column">
+      <div class="photo">
+        <div class="head-shape"></div>
+        <div class="body-shape"></div>
+        <small>DEMO PHOTO</small>
+      </div>
+
+      <div class="person-name" id="reportName">DEMO USER</div>
+
+      <svg class="qr" viewBox="0 0 100 100"
+           xmlns="http://www.w3.org/2000/svg"
+           aria-label="Decorative demo QR graphic">
+        <rect width="100" height="100" fill="white"/>
+        <g fill="black">
+          <path d="M3 3h28v28H3z M8 8v18h18V8z M12 12h10v10H12z"/>
+          <path d="M69 3h28v28H69z M74 8v18h18V8z M78 12h10v10H78z"/>
+          <path d="M3 69h28v28H3z M8 74v18h18V74z M12 78h10v10H12z"/>
+          <path d="M38 3h6v6h-6z M50 3h6v12h-6z M38 15h12v6H38z
+          M44 21h6v12h-6z M56 21h6v6h-6z M38 38h6v6h-6z
+          M50 38h6v6h-6z M62 38h6v12h-6z M74 38h6v6h-6z
+          M86 38h11v6H86z M38 50h12v6H38z M56 50h6v6h-6z
+          M74 50h6v12h-6z M86 50h6v12h-6z M38 62h6v6h-6z
+          M50 62h12v6H50z M62 74h6v6h-6z M74 68h6v6h-6z
+          M86 68h11v6H86z M38 80h6v6h-6z M50 80h6v6h-6z
+          M56 86h12v6H56z M74 86h6v11h-6z M86 80h11v6H86z
+          M38 92h12v5H38z"/>
+        </g>
+      </svg>
+    </aside>
+
+    <section class="details">
+      <div class="section-title">পরিচিতি তথ্য</div>
+      <div class="info-row"><span>পরিচিতি নম্বর</span><span id="reportId">DEMO-663</span></div>
+      <div class="info-row"><span>রেফারেন্স নম্বর</span><span id="reportReference">663</span></div>
+      <div class="info-row"><span>অঞ্চল</span><span id="reportRegion">ঢাকা</span></div>
+
+      <div class="section-title">ব্যক্তিগত তথ্য</div>
+      <div class="info-row"><span>নাম (বাংলা)</span><span id="reportNameBn">ডেমো ব্যবহারকারী</span></div>
+      <div class="info-row"><span>নাম (ইংরেজি)</span><span id="reportNameEn">DEMO USER</span></div>
+      <div class="info-row"><span>জন্ম তারিখ</span><span id="reportDob">2026-10-23</span></div>
+      <div class="info-row"><span>পিতার নাম</span><span id="reportFather">ডেমো পিতা</span></div>
+      <div class="info-row"><span>মাতার নাম</span><span id="reportMother">ডেমো মাতা</span></div>
+
+      <div class="section-title">অন্যান্য তথ্য</div>
+      <div class="info-row"><span>রক্তের গ্রুপ</span><span id="reportBlood">O+</span></div>
+      <div class="info-row"><span>পেশা</span><span id="reportOccupation">Student</span></div>
+      <div class="info-row"><span>বিবরণ</span><span id="reportDescription">Demo information</span></div>
+
+      <div class="section-title">বর্তমান ঠিকানা</div>
+      <div class="address" id="reportPresentAddress">Demo Present Address, Bangladesh</div>
+
+      <div class="section-title">স্থায়ী ঠিকানা</div>
+      <div class="address" id="reportPermanentAddress">Demo Permanent Address, Bangladesh</div>
+
+      <div class="watermark">
+        DEMO REPORT — FOR DEVELOPMENT PURPOSES ONLY
+        <small>This is a software-generated demonstration report.</small>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <button class="back" type="button" onclick="history.back()">Back</button>
+    <button class="download" type="button" onclick="window.print()">Download A4 PDF</button>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  const params = new URLSearchParams(location.search);
+  const raw = sessionStorage.getItem("reportData");
+  let data = {};
+
+  if (raw) {
+    try {
+      data = JSON.parse(raw) || {};
+    } catch (e) {
+      data = {};
+    }
+  }
+
+  const reference =
+    params.get("reference") ||
+    data.reference ||
+    data.referenceNo ||
+    "";
+
+  const searchDate =
+    params.get("date") ||
+    data.searchDate ||
+    "";
+
+  document.getElementById("reference").value = reference;
+  document.getElementById("searchDate").value = searchDate;
+
+  function pick() {
+    for (const key of arguments) {
+      if (data[key] !== undefined && data[key] !== null &&
+          data[key] !== "") {
+        return data[key];
+      }
+    }
+    return "";
+  }
+
+  function set(id, value) {
+    const el = document.getElementById(id);
+    if (el && value !== "") el.textContent = String(value);
+  }
+
+  set("reportReference", reference || pick("reference", "referenceNo", "reference_no"));
+  set("reportId", pick("id", "reportId", "report_id") || (reference ? "DEMO-" + reference : "DEMO-663"));
+  set("reportName", pick("nameBangla", "name_bn", "name", "full_name") || "DEMO USER");
+  set("reportNameBn", pick("nameBangla", "name_bn", "banglaName") || "ডেমো ব্যবহারকারী");
+  set("reportNameEn", pick("nameEnglish", "name_en", "englishName", "name", "full_name") || "DEMO USER");
+  set("reportDob", pick("dob", "dateOfBirth", "date_of_birth", "birthDate") || searchDate || "2026-10-23");
+  set("reportFather", pick("fatherName", "father_name", "father") || "ডেমো পিতা");
+  set("reportMother", pick("motherName", "mother_name", "mother") || "ডেমো মাতা");
+  set("reportBlood", pick("bloodGroup", "blood_group") || "O+");
+  set("reportOccupation", pick("occupation", "profession") || "Student");
+  set("reportDescription", pick("description", "remarks") || "Demo information");
+  set("reportPresentAddress", pick("presentAddress", "present_address", "currentAddress") || "Demo Present Address, Bangladesh");
+  set("reportPermanentAddress", pick("permanentAddress", "permanent_address") || "Demo Permanent Address, Bangladesh");
+  set("reportRegion", pick("region", "district", "area") || "ঢাকা");
+})();
+</script>
+
+</body>
+</html>
