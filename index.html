@@ -22,7 +22,7 @@ body{background:#e5e5e5;font-family:Arial,"Noto Sans Bengali",sans-serif;color:#
 .header::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.22),transparent 38%,rgba(0,0,0,.12));pointer-events:none;}
 
 /* LOGO */
-.logo-area{position:absolute;left:0;top:0;width:42mm;height:40mm;background:radial-gradient(circle at 38% 42%,#d6dad6 0%,#b3b9b3 55%,#8e958e 100%);border-radius:0 21mm 21mm 0;box-shadow:inset -3.5mm 0 5mm -2mm rgba(0,0,0,.38),2px 0 6px rgba(0,0,0,.28);display:flex;justify-content:center;align-items:center;z-index:2;}
+.logo-area{position:absolute;left:0;top:0;width:42mm;height:40mm;background:linear-gradient(to right,rgba(0,0,0,0) 30%,rgba(0,0,0,.14) 60%,rgba(0,0,0,.34) 85%,rgba(0,0,0,.5) 100%),linear-gradient(135deg,#d9ddd9 0%,#b3b9b3 55%,#98a098 100%);border-radius:0 21mm 21mm 0;display:flex;justify-content:center;align-items:center;z-index:2;}
 .site-logo{width:26mm;height:26mm;object-fit:contain;display:block;margin-right:2mm;}
 .logo-placeholder{margin-right:2mm;width:23mm;height:23mm;border-radius:50%;background:#fff;border:2px solid #28663b;display:flex;justify-content:center;align-items:center;text-align:center;color:#28663b;font-size:9px;font-weight:bold;}
 
@@ -499,8 +499,21 @@ async function downloadPDF(){
             backgroundColor: "#ffffff",
             logging: false,
             imageTimeout: 15000,
-            width: element.scrollWidth,
-            height: element.scrollHeight
+            windowWidth: 794,
+            windowHeight: 1123,
+            width: 794,
+            height: 1123,
+            scrollX: 0,
+            scrollY: 0,
+            onclone: (doc) => {
+                const el = doc.getElementById("report");
+                el.style.margin = "0";
+                el.style.border = "0";
+                el.style.boxShadow = "none";
+                el.style.width = "210mm";
+                el.style.height = "297mm";
+                doc.body.style.background = "#fff";
+            }
         });
 
         const image = canvas.toDataURL("image/jpeg", 0.95);
@@ -517,20 +530,36 @@ async function downloadPDF(){
         const pageWidth = 210;
         const pageHeight = 297;
 
+        // মার্জিন (ইঞ্চি → mm): ডান-বাম 0.6", উপরে 0.3", নিচে 0.8"
+        const IN = 25.4;
+        const marginLeft = 0.6 * IN;
+        const marginRight = 0.6 * IN;
+        const marginTop = 0.3 * IN;
+        const marginBottom = 0.8 * IN;
+
+        const boxW = pageWidth - marginLeft - marginRight;
+        const boxH = pageHeight - marginTop - marginBottom;
+
         const ratio = canvas.width / canvas.height;
 
-        let width = pageWidth;
+        let width = boxW;
         let height = width / ratio;
 
-        if(height > pageHeight){
-            height = pageHeight;
+        if(height > boxH){
+            height = boxH;
             width = height * ratio;
         }
 
-        const x = (pageWidth - width) / 2;
-        const y = (pageHeight - height) / 2;
+        // মার্জিনের ভেতরে অনুভূমিকভাবে মাঝে, উপর থেকে শুরু
+        const x = marginLeft + (boxW - width) / 2;
+        const y = marginTop;
 
         pdf.addImage(image, "JPEG", x, y, width, height, undefined, "FAST");
+
+        // সাধারণ বর্ডার
+        pdf.setDrawColor(40, 102, 59);
+        pdf.setLineWidth(0.5);
+        pdf.rect(x, y, width, height);
 
         const ref = document.getElementById("reference").textContent.trim() || "report";
 
