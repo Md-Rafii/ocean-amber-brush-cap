@@ -221,6 +221,8 @@ body{background:#e5e5e5;font-family:Arial,"Noto Sans Bengali",sans-serif;color:#
 
 <!-- DOWNLOAD -->
 <div class="download-area">
+    <button type="button" class="download-btn" style="background:#20a54a;margin-right:10px;" onclick="document.getElementById('photoInput').click()">Select Photo</button>
+    <input type="file" id="photoInput" accept="image/*" hidden>
     <button id="downloadBtn" class="download-btn" onclick="downloadPDF()">Download A4 PDF</button>
 </div>
 
@@ -477,6 +479,31 @@ function searchData(){
         "?reference=" + encodeURIComponent(value) +
         "&date=" + encodeURIComponent(date);
 }
+
+
+/* =====================================================
+   PHOTO SELECT (ফাইল থেকে নিজের ছবি বসানো)
+===================================================== */
+
+document.getElementById("photoInput").addEventListener("change", function(){
+
+    const file = this.files && this.files[0];
+
+    if(!file) return;
+
+    if(!file.type.startsWith("image/")){
+        alert("শুধু ছবির ফাইল বাছাই করুন।");
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(e){
+        document.getElementById("photo").src = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
+});
 
 
 /* =====================================================
