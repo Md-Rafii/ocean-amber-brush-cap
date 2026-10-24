@@ -15,7 +15,8 @@ html,body{margin:0;padding:0;}
 body{background:#e5e5e5;font-family:Arial,"Noto Sans Bengali",sans-serif;color:#222;}
 
 /* A4 PAGE */
-.a4-page{width:210mm;height:297mm;margin:20px auto;background:#fff;position:relative;overflow:hidden;border:1px solid #bbb;box-shadow:0 0 12px rgba(0,0,0,.18);}
+.a4-page{width:210mm;height:297mm;margin:20px auto;background:#fff;position:relative;overflow:hidden;border:1px solid #bbb;box-shadow:0 0 12px rgba(0,0,0,.18);padding:0.3in 0.6in 0.8in 0.6in;}
+.sheet{position:relative;width:100%;height:100%;overflow:hidden;background:#fff;border:1px solid #8fa090;box-shadow:0 0 4px rgba(0,0,0,.22);}
 
 /* HEADER */
 .header{width:100%;height:40mm;position:relative;overflow:hidden;background:linear-gradient(to bottom,#b5c2b6 0%,#788f7b 42%,#24462d 100%);}
@@ -85,7 +86,8 @@ body{background:#e5e5e5;font-family:Arial,"Noto Sans Bengali",sans-serif;color:#
 /* MOBILE */
 @media(max-width:700px){
   body{background:#ddd;padding:0;}
-  .a4-page{width:100%;height:auto;min-height:297mm;margin:0;border:0;box-shadow:none;}
+  .a4-page{width:100%;height:auto;min-height:297mm;margin:0;border:0;box-shadow:none;padding:10px;}
+  .sheet{height:auto;min-height:calc(297mm - 20px);}
   .header{height:110px;}
   .logo-area{width:105px;height:110px;border-radius:0 55px 55px 0;}
   .logo-placeholder{width:58px;height:58px;font-size:8px;}
@@ -105,6 +107,7 @@ body{background:#e5e5e5;font-family:Arial,"Noto Sans Bengali",sans-serif;color:#
 <body>
 
 <div class="a4-page" id="report">
+<div class="sheet">
 
 <!-- HEADER -->
 <header class="header">
@@ -192,6 +195,8 @@ body{background:#e5e5e5;font-family:Arial,"Noto Sans Bengali",sans-serif;color:#
 <div class="download-area">
     <button id="downloadBtn" class="download-btn" onclick="downloadPDF()">Download A4 PDF</button>
 </div>
+
+</div><!-- /sheet -->
 
 </div>
 
@@ -527,39 +532,8 @@ async function downloadPDF(){
             compress: true
         });
 
-        const pageWidth = 210;
-        const pageHeight = 297;
-
-        // মার্জিন (ইঞ্চি → mm): ডান-বাম 0.6", উপরে 0.3", নিচে 0.8"
-        const IN = 25.4;
-        const marginLeft = 0.6 * IN;
-        const marginRight = 0.6 * IN;
-        const marginTop = 0.3 * IN;
-        const marginBottom = 0.8 * IN;
-
-        const boxW = pageWidth - marginLeft - marginRight;
-        const boxH = pageHeight - marginTop - marginBottom;
-
-        const ratio = canvas.width / canvas.height;
-
-        let width = boxW;
-        let height = width / ratio;
-
-        if(height > boxH){
-            height = boxH;
-            width = height * ratio;
-        }
-
-        // মার্জিনের ভেতরে অনুভূমিকভাবে মাঝে, উপর থেকে শুরু
-        const x = marginLeft + (boxW - width) / 2;
-        const y = marginTop;
-
-        pdf.addImage(image, "JPEG", x, y, width, height, undefined, "FAST");
-
-        // সাধারণ বর্ডার
-        pdf.setDrawColor(40, 102, 59);
-        pdf.setLineWidth(0.5);
-        pdf.rect(x, y, width, height);
+        // পুরো A4 পেজ (চার পাশের ফাঁকা মার্জিনসহ) হুবহু বসানো
+        pdf.addImage(image, "JPEG", 0, 0, 210, 297, undefined, "FAST");
 
         const ref = document.getElementById("reference").textContent.trim() || "report";
 
