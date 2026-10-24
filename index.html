@@ -23,7 +23,10 @@ body{background:#e5e5e5;font-family:Arial,"Noto Sans Bengali",sans-serif;color:#
 .header::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.22),transparent 38%,rgba(0,0,0,.12));pointer-events:none;}
 
 /* LOGO */
-.logo-area{position:absolute;left:0;top:0;width:1in;height:1in;background:linear-gradient(to right,rgba(0,0,0,0) 35%,rgba(0,0,0,.16) 65%,rgba(0,0,0,.36) 88%,rgba(0,0,0,.55) 100%),linear-gradient(135deg,#d9ddd9 0%,#b3b9b3 55%,#98a098 100%);border-radius:0 5mm 5mm 0 / 0 50% 50% 0;display:flex;justify-content:center;align-items:center;z-index:2;}
+.logo-area{position:absolute;left:0;top:0;width:1in;height:1in;background:none;border-radius:0 5mm 5mm 0 / 0 50% 50% 0;display:flex;justify-content:center;align-items:center;z-index:2;}
+.edge{position:absolute;top:0;bottom:0;left:0;border-radius:0 5mm 5mm 0 / 0 50% 50% 0;}
+.edge.fill{right:10px;background:linear-gradient(135deg,#d9ddd9 0%,#b3b9b3 55%,#98a098 100%);}
+.site-logo,.logo-placeholder{position:relative;z-index:2;}
 .site-logo{width:17mm;height:17mm;object-fit:contain;display:block;margin-right:0;}
 .logo-placeholder{margin-right:0;width:16mm;height:16mm;border-radius:50%;background:#fff;border:2px solid #28663b;display:flex;justify-content:center;align-items:center;text-align:center;color:#28663b;font-size:7px;font-weight:bold;}
 
@@ -68,9 +71,9 @@ body{background:#e5e5e5;font-family:Arial,"Noto Sans Bengali",sans-serif;color:#
 .address{width:100%;min-height:16mm;padding:1.8mm;border-bottom:1px solid #eee;font-size:11px;line-height:1.45;}
 
 /* FOOTER */
-.sheet-footer{position:absolute;left:0;right:0;bottom:5px;}
-.warning{text-align:center;color:#d33;font-size:8.5px;margin:0 8mm 1mm;}
-.footer{text-align:center;font-family:Georgia,serif;font-size:9.5px;padding-bottom:0;}
+.sheet-footer{position:absolute;left:0;right:0;bottom:13px;}
+.warning{text-align:center;color:#d33;font-size:7.5px;margin:0 8mm 1mm;}
+.footer{text-align:center;font-family:Georgia,serif;font-size:8.5px;padding-bottom:0;}
 
 /* DOWNLOAD */
 .download-area{width:210mm;max-width:100%;margin:0 auto;padding:6px 0 28px;display:flex;justify-content:center;align-items:center;}
@@ -91,8 +94,9 @@ body{background:#e5e5e5;font-family:Arial,"Noto Sans Bengali",sans-serif;color:#
   body{background:#ddd;padding:0;}
   .a4-page{width:100%;height:auto;min-height:297mm;margin:0;border:0;box-shadow:none;padding:10px;}
   .sheet{height:auto;min-height:calc(297mm - 20px);}
-  .sheet-footer{position:static;padding:8px 0 5px;}
+  .sheet-footer{position:static;padding:8px 0 13px;}
   .header{height:96px;}
+  .edge{border-radius:0 19px 19px 0 / 0 50% 50% 0;}
   .logo-area{width:96px;height:96px;border-radius:0 19px 19px 0 / 0 50% 50% 0;}
   .logo-placeholder{width:52px;height:52px;font-size:8px;}
   .site-logo{width:54px;height:54px;margin-right:6px;}
@@ -116,6 +120,17 @@ body{background:#e5e5e5;font-family:Arial,"Noto Sans Bengali",sans-serif;color:#
 <!-- HEADER -->
 <header class="header">
     <div class="logo-area">
+        <div class="edge" style="right:0px;background:#454a45"></div>
+        <div class="edge" style="right:1px;background:#515651"></div>
+        <div class="edge" style="right:2px;background:#5d625d"></div>
+        <div class="edge" style="right:3px;background:#696e69"></div>
+        <div class="edge" style="right:4px;background:#757a75"></div>
+        <div class="edge" style="right:5px;background:#808680"></div>
+        <div class="edge" style="right:6px;background:#8c928c"></div>
+        <div class="edge" style="right:7px;background:#989e98"></div>
+        <div class="edge" style="right:8px;background:#a4aaa4"></div>
+        <div class="edge" style="right:9px;background:#b0b6b0"></div>
+        <div class="edge fill"></div>
         <!-- নিজের logo: এই ফোল্ডারে logo.png নামে রাখো -->
         <img id="siteLogo" class="site-logo" src="logo.png" alt="Logo"
              onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex'">
