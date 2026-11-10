@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>আপনার নাম AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600&family=Fraunces:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f6f4; --surface:#ffffff; --ink:#14231d; --muted:#6b7a73;
+  --brand:#0f6b5a; --brand-ink:#ffffff; --user:#0f6b5a; --user-ink:#fff;
+  --bot:#ffffff; --line:#dce5e0;
+}
+@media (prefers-color-scheme: dark){
+  :root{--bg:#0d1512;--surface:#14201b;--ink:#e7f0ec;--muted:#8fa399;--brand:#3fbfa3;--brand-ink:#06211a;--user:#1c8a74;--user-ink:#fff;--bot:#1a2923;--line:#243630}
+}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{font-family:'Hind Siliguri',system-ui,sans-serif;background:var(--bg);color:var(--ink);display:flex;justify-content:center}
+.app{width:100%;max-width:720px;height:100%;display:flex;flex-direction:column;background:var(--bg);padding-top:env(safe-area-inset-top,0px)}
+header{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--surface);border-bottom:1px solid var(--line)}
+.logo{width:40px;height:40px;border-radius:12px;background:var(--brand);color:var(--brand-ink);display:grid;place-items:center;font:600 20px 'Fraunces',serif}
+.title{font:600 18px 'Fraunces','Hind Siliguri',serif;line-height:1.1}
+.sub{font-size:12px;color:var(--muted)}
+.sub::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#2fb67c;margin-right:6px}
+header button{margin-left:auto}
+.icon{background:none;border:1px solid var(--line);color:var(--muted);border-radius:10px;padding:6px 10px;font:inherit;font-size:13px;cursor:pointer}
+#log{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
+.msg{max-width:84%;padding:10px 14px;border-radius:16px;line-height:1.55;font-size:15.5px;white-space:pre-wrap;word-wrap:break-word}
+.bot{align-self:flex-start;background:var(--bot);border:1px solid var(--line);border-bottom-left-radius:4px}
+.user{align-self:flex-end;background:var(--user);color:var(--user-ink);border-bottom-right-radius:4px}
+.err{align-self:center;background:transparent;color:#c0392b;border:1px solid #c0392b;font-size:14px}
+.dots span{display:inline-block;width:6px;height:6px;margin:0 2px;border-radius:50%;background:var(--muted);animation:b 1s infinite}
+.dots span:nth-child(2){animation-delay:.15s}.dots span:nth-child(3){animation-delay:.3s}
+@keyframes b{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-4px);opacity:1}}
+.chips{display:flex;gap:8px;flex-wrap:wrap;padding:0 16px 8px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:7px 13px;font:inherit;font-size:13.5px;cursor:pointer}
+form{display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:var(--surface);border-top:1px solid var(--line)}
+textarea{flex:1;resize:none;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:14px;padding:11px 14px;font:inherit;font-size:16px;max-height:120px;outline:none}
+textarea:focus-visible,.icon:focus-visible,.chip:focus-visible,#send:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+#send{border:0;background:var(--brand);color:var(--brand-ink);border-radius:14px;padding:0 18px;font:600 15px inherit;font-family:inherit;cursor:pointer}
+#send:disabled{opacity:.5}
+.foot{text-align:center;font-size:11px;color:var(--muted);padding:0 0 6px;background:var(--surface)}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="logo" id="logo">N</div>
+    <div><div class="title" id="brandName">আপনার নাম AI</div><div class="sub" id="tagline">অনলাইন</div></div>
+    <button class="icon" id="clear" type="button">নতুন চ্যাট</button>
+  </header>
+  <div id="log" aria-live="polite"></div>
+  <div class="chips" id="chips"></div>
+  <form id="f">
+    <textarea id="in" rows="1" placeholder="আপনার প্রশ্ন লিখুন… / Ask anything…"></textarea>
+    <button id="send" type="submit">পাঠান</button>
+  </form>
+  <div class="foot" id="foot"></div>
+</div>
+
+<script>
+/* ============ এখানে নিজের তথ্য বসাও ============ */
+const CONFIG = {
+  BRAND_NAME: "আপনার নাম AI",          // তোমার নাম/ব্র্যান্ড
+  OWNER: "আপনার নাম",                   // নিচে "Powered by" এ দেখাবে
+  TAGLINE: "বাংলা ও English এ সাহায্য করি",
+  API_URL: "https://api.lmnx9.shop/ai/gemini.php?prompt=",  // তোমার API
+  GREETING: "আসসালামু আলাইকুম! আমি {brand}। আপনাকে কীভাবে সাহায্য করতে পারি? / Hi! Ask me anything.",
+  SUGGESTIONS: ["আমার সম্পর্কে বলো", "একটা ইমেইল লিখে দাও", "Explain AI simply", "আজকের জন্য একটা আইডিয়া দাও"]
+};
+/* ============================================== */
+
+const $ = id => document.getElementById(id);
+const log = $('log'), input = $('in'), sendBtn = $('send');
+
+document.title = CONFIG.BRAND_NAME;
+$('brandName').textContent = CONFIG.BRAND_NAME;
+$('tagline').textContent = CONFIG.TAGLINE;
+$('logo').textContent = (CONFIG.BRAND_NAME.trim()[0] || 'A').toUpperCase();
+$('foot').textContent = 'Powered by ' + CONFIG.OWNER;
+
+function add(text, cls){
+  const d = document.createElement('div');
+  d.className = 'msg ' + cls; d.textContent = text;
+  log.appendChild(d); log.scrollTop = log.scrollHeight; return d;
+}
+
+function start(){
+  log.innerHTML = '';
+  add(CONFIG.GREETING.replace('{brand}', CONFIG.BRAND_NAME), 'bot');
+  $('chips').style.display = 'flex';
+}
+$('chips').innerHTML = '';
+CONFIG.SUGGESTIONS.forEach(s => {
+  const b = document.createElement('button');
+  b.type = 'button'; b.className = 'chip'; b.textContent = s;
+  b.onclick = () => send(s); $('chips').appendChild(b);
+});
+
+function extract(raw){
+  const t = raw.trim();
+  try {
+    const j = JSON.parse(t);
+    const pick = o => {
+      if (typeof o === 'string') return o;
+      if (!o || typeof o !== 'object') return '';
+      for (const k of ['answer','response','reply','text','result','message','output','content','data']) {
+        if (o[k] != null) { const v = pick(o[k]); if (v) return v; }
+      }
+      return '';
+    };
+    return pick(j) || t;
+  } catch(e){ return t; }
+}
+
+async function send(text){
+  text = text.trim(); if (!text) return;
+  $('chips').style.display = 'none';
+  add(text, 'user'); input.value = ''; input.style.height = 'auto';
+  sendBtn.disabled = true;
+  const typing = add('', 'bot'); typing.innerHTML = '<span class="dots"><span></span><span></span><span></span></span>';
+  try {
+    const r = await fetch(CONFIG.API_URL + encodeURIComponent(text));
+    const raw = await r.text();
+    if (!r.ok) throw new Error('Server error ' + r.status);
+    typing.textContent = extract(raw) || 'দুঃখিত, উত্তর পাওয়া যায়নি।';
+  } catch (e) {
+    typing.remove();
+    add('সমস্যা: ' + e.message, 'err');
+  } finally {
+    sendBtn.disabled = false; log.scrollTop = log.scrollHeight;
+  }
+}
+
+$('f').addEventListener('submit', e => { e.preventDefault(); send(input.value); });
+input.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(input.value); }
+});
+input.addEventListener('input', () => { input.style.height = 'auto'; input.style.height = input.scrollHeight + 'px'; });
+$('clear').onclick = start;
+start();
+</script>
+</body>
+</html>
