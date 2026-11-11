@@ -1,145 +1,268 @@
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>আপনার নাম AI</title>
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600&family=Fraunces:wght@600&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#f3f6f4; --surface:#ffffff; --ink:#14231d; --muted:#6b7a73;
-  --brand:#0f6b5a; --brand-ink:#ffffff; --user:#0f6b5a; --user-ink:#fff;
-  --bot:#ffffff; --line:#dce5e0;
-}
-@media (prefers-color-scheme: dark){
-  :root{--bg:#0d1512;--surface:#14201b;--ink:#e7f0ec;--muted:#8fa399;--brand:#3fbfa3;--brand-ink:#06211a;--user:#1c8a74;--user-ink:#fff;--bot:#1a2923;--line:#243630}
-}
-*{box-sizing:border-box;margin:0}
-html,body{height:100%}
-body{font-family:'Hind Siliguri',system-ui,sans-serif;background:var(--bg);color:var(--ink);display:flex;justify-content:center}
-.app{width:100%;max-width:720px;height:100%;display:flex;flex-direction:column;background:var(--bg);padding-top:env(safe-area-inset-top,0px)}
-header{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--surface);border-bottom:1px solid var(--line)}
-.logo{width:40px;height:40px;border-radius:12px;background:var(--brand);color:var(--brand-ink);display:grid;place-items:center;font:600 20px 'Fraunces',serif}
-.title{font:600 18px 'Fraunces','Hind Siliguri',serif;line-height:1.1}
-.sub{font-size:12px;color:var(--muted)}
-.sub::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#2fb67c;margin-right:6px}
-header button{margin-left:auto}
-.icon{background:none;border:1px solid var(--line);color:var(--muted);border-radius:10px;padding:6px 10px;font:inherit;font-size:13px;cursor:pointer}
-#log{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
-.msg{max-width:84%;padding:10px 14px;border-radius:16px;line-height:1.55;font-size:15.5px;white-space:pre-wrap;word-wrap:break-word}
-.bot{align-self:flex-start;background:var(--bot);border:1px solid var(--line);border-bottom-left-radius:4px}
-.user{align-self:flex-end;background:var(--user);color:var(--user-ink);border-bottom-right-radius:4px}
-.err{align-self:center;background:transparent;color:#c0392b;border:1px solid #c0392b;font-size:14px}
-.dots span{display:inline-block;width:6px;height:6px;margin:0 2px;border-radius:50%;background:var(--muted);animation:b 1s infinite}
-.dots span:nth-child(2){animation-delay:.15s}.dots span:nth-child(3){animation-delay:.3s}
-@keyframes b{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-4px);opacity:1}}
-.chips{display:flex;gap:8px;flex-wrap:wrap;padding:0 16px 8px}
-.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:7px 13px;font:inherit;font-size:13.5px;cursor:pointer}
-form{display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:var(--surface);border-top:1px solid var(--line)}
-textarea{flex:1;resize:none;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:14px;padding:11px 14px;font:inherit;font-size:16px;max-height:120px;outline:none}
-textarea:focus-visible,.icon:focus-visible,.chip:focus-visible,#send:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
-#send{border:0;background:var(--brand);color:var(--brand-ink);border-radius:14px;padding:0 18px;font:600 15px inherit;font-family:inherit;cursor:pointer}
-#send:disabled{opacity:.5}
-.foot{text-align:center;font-size:11px;color:var(--muted);padding:0 0 6px;background:var(--surface)}
-</style>
-</head>
-<body>
-<div class="app">
-  <header>
-    <div class="logo" id="logo">N</div>
-    <div><div class="title" id="brandName">আপনার নাম AI</div><div class="sub" id="tagline">অনলাইন</div></div>
-    <button class="icon" id="clear" type="button">নতুন চ্যাট</button>
-  </header>
-  <div id="log" aria-live="polite"></div>
-  <div class="chips" id="chips"></div>
-  <form id="f">
-    <textarea id="in" rows="1" placeholder="আপনার প্রশ্ন লিখুন… / Ask anything…"></textarea>
-    <button id="send" type="submit">পাঠান</button>
-  </form>
-  <div class="foot" id="foot"></div>
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta content="width=device-width, initial-scale=1.0" name="viewport">
+		<title>N/A</title>
+		<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css">
+		<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla&display=swap" rel="stylesheet">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript"></script>
+		<style>
+			@page {
+				size: A4;
+				margin: auto;
+			}
+		body {
+				margin: 0;
+			}
+			.background {
+				background-color: ;
+				position: relative;
+				width: 750px;
+				height: 1065px;
+				margin: auto;
+			}
+			.crane {
+				max-width: 100%;
+				height: 100%;
+			}
+			.topTitle {
+				position: absolute;
+				left: 21%;
+				top: 8%;
+				width: auto;
+				font-size: 42px;
+				color: rgb(255, 182, 47);
+			}
+			#loadMe {
+				visibility: hidden;
+			}
+			@media print {
+				html,
+				body {
+					width: 210mm !important;
+					height: 297mm !important;
+					background-color: #fff !important;
+				}
+				.print {
+					display: none !important;
+				}
+			}
+        	#print {
+			width: 200px
+            height: 100px;
+            background: #8a00ff;
+            padding: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 16px;
+            
+            align-items: center;
+            justify-content: center;
+    
+			}
+			#present_addr,
+			#permanent_addr {
+
+				text-align: left;
+			}
+		
+	                .dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .dialog-box {
+        
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+            box-shadow: 5 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .dialog-box h2 {
+            margin-top: 400px;
+            font-size: 30px;
+            color: #333;
+        }
+
+        .dialog-box p {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #666;
+        }
+
+
+		</style>
+
+	</head>
+
+	<body onload="showprint()" style="
+
+    text-align: center;
+
+">
+<script>
+        window.onload = function() {
+                    }
+
+        function showDialog() {
+            var dialogOverlay = document.createElement('div');
+            dialogOverlay.className = 'dialog-overlay';
+            var dialogBox = document.createElement('div');
+            dialogBox.className = 'dialog-box';
+
+            var title = document.createElement('h2');
+            title.innerText = 'Error';
+
+            var message = document.createElement('p');
+            message.innerText = 'Please Provide Nid and Dob Parameters on api and Try Again..!!';
+            
+            dialogBox.appendChild(title);
+            dialogBox.appendChild(message);
+            dialogOverlay.appendChild(dialogBox);
+
+            document.body.appendChild(dialogOverlay);
+        }
+    </script>
+		<div class="background">
+
+			<img class="crane" src="https://servercopy.work/v1.png" height="1000px" width="750px">
+
+			<div style="position: absolute; left: 30%; top: 8%;width: auto;font-size: 16px; color: rgb(255 224 0);"><b>National Identity Registration Wing (NIDW)</b></div>
+
+			<div style="position: absolute; left: 37%; top: 11%;width: auto;font-size: 14px; color: rgb(255, 47, 161);"><b>Select Your Search Category</b></div>
+
+			<div style="position: absolute; left: 45%; top: 12.8%;width: auto;font-size: 12px; color: rgb(8, 121, 4);">Search By NID / Voter No.</div>
+
+			<div style="position: absolute; left: 45%; top: 14.3%;width: auto;font-size: 12px; color: rgb(7, 119, 184);">Search By Form No.</div>
+
+			<div style="position: absolute; left: 30%; top: 16.9%;width: auto;font-size: 12px; color: rgb(252, 0, 0);"><b>NID or Voter No*</b></div>
+
+			<div style="position: absolute; left: 45%; top: 16.9%; width: auto; font-size: 12px; color: rgb(143, 143, 143);">NID</div>
+
+			<div style="position: absolute;left: 62.9%;top: 17.1%;width: auto;font-size: 11px;color: rgb(255 255 255);">Submit</div>
+
+			<div style="position: absolute;left: 89%;top: 11.55%;width: auto;font-size: 11px;color: #fff;">Home</div>
+
+			<div style="position: absolute; left: 37%; top: 27%; width: auto; font-size: 16px; color: rgb(7, 7, 7);  font-family: 'Tiro Bangla';"><b>জাতীয় পরিচিতি তথ্য</b></div>
+
+			<div style="position: absolute; left: 37%; top: 29.7%; width: auto; font-size: 13px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">জাতীয় পরিচয় পত্র নম্বর</div>
+
+			<div id="nid_no" style="position: absolute; left: 55%; top: 29.7%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">N/A</div>
+
+			<div style="position: absolute; left: 37%; top: 32.5%; width: auto; font-size: 13px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">পিন নম্বর</div>
+
+			<div id="nid_father" style="position: absolute; left: 55%; top: 32.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7);"></div>
+
+			<div style="position: absolute; left: 37%; top: 35%; width: auto; font-size: 13px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">পূর্ববর্তী পরিচয়পত্র নম্বর</div>
+
+			<div id="voterNo" style="position: absolute; left: 55%; top: 35%; width: auto; font-size: 14px; color: rgb(7, 7, 7);"></div>
+
+			<div style="position: absolute; left: 37%; top: 37.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">ভোটার এলাকা</div>
+
+			<div id="spouse" style="position: absolute; left: 55%; top: 37.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7);"></div>
+
+			<div style="position: absolute; left: 37%; top: 40.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">জন্মস্থান</div>
+
+			<div id="birth_place" style="position: absolute; left: 55%; top: 40.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">N/A</div>
+
+				<div style="position: absolute; left: 37%; top: 43%; width: auto; font-size: 16px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';"><b>ব্যক্তিগত তথ্য</b></div>
+
+			<div style="position: absolute; left: 37%; top: 45.6%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">নাম (বাংলা)</div>
+
+			<div id="nameBangla" style="position: absolute;  left: 55%; top: 45.6%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';"><b>N/A</b></div>
+
+			<div style="position: absolute; left: 37%; top: 48.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">নাম (ইংরেজি)</div>
+
+			<div id="nameEnglish" style="position: absolute; left: 55%; top:48.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">N/A</div>
+
+			<div style="position: absolute; left: 37%; top: 51%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">জন্ম তারিখ</div>
+
+			<div id="dob" style="position: absolute; left: 55%; top: 51%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">N/A</div>
+
+			<div style="position: absolute; left: 37%; top: 53.7%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">পিতার নাম</div>
+
+			<div id="fathers_name" style="position: absolute; left: 55%; top: 53.7%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">N/A</div>
+
+			<div style="position: absolute; left: 37%; top: 56.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">মাতার নাম</div>
+
+			<div id="mothers_name" style="position: absolute; left: 55%; top: 56.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">N/A</div>
+
+
+			<div style="position: absolute; left: 37%; top: 59%; width: auto; font-size: 16px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';"><b>অন্যান্য তথ্য</b></div>
+
+			<div style="position: absolute; left: 37%; top: 62.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">লিঙ্গ</div>
+
+			<div id="gender" style="position: absolute; left: 55%; top: 62.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">N/A</div>
+
+			<div style="position: absolute; left: 37%; top: 64.8%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">ধর্ম</div>
+
+			<div id="birthPlace" style="position: absolute; left: 55%; top: 64.8%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">N/A</div>
+
+			<div style="position: absolute; left: 37%; top: 67.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';",>জন্মবার</div>
+
+			<div id="occupation" style="position: absolute; left: 55%; top: 67.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">N/A</div>
+
+			<div style="position: absolute; left: 37%; top: 70%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">বয়স</div>
+
+			<div id="religion" style="position: absolute; left: 55%; top: 70%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">N/A</div>
+
+			<div style="position: absolute; left: 37%; top: 73%; width: auto; font-size: 16px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';"><b>বর্তমান ঠিকানা</b></div>
+
+			<div id="present_addr" style="position: absolute; left: 37%; top: 75.5%; width: 48%; font-size: 12px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">N/A</div>
+
+			<div style="position: absolute; left: 37%; top: 82%; width: auto; font-size: 16px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';"><b>স্থায়ী ঠিকানা</b></div>
+
+			<div id="permanent_addr" style="position: absolute; left: 37%; top: 84.5%; width: 48%; font-size: 12px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">N/A</div>
+
+			<div style="position: absolute;top: 92%;width: 100%;font-size: 12px;text-align: center;color: rgb(255, 0, 0); font-family: 'Tiro Bangla';">উপরে প্রদর্শিত তথ্যসমূহ জাতীয় পরিচয়পত্র সংশ্লিষ্ট, ভোটার তালিকার সাথে সরাসরি সম্পর্কযুক্ত নয়।</div>
+
+			<div style="position: absolute;top: 93.5%;width: 100%;text-align: center;font-size: 12px;color: rgb(3, 3, 3);">This is Software Generated Report From Bangladesh Election Commission, Signature & Seal Aren't Required.</div>
+<div style="position: absolute; left: 16%; top: 25.7%; width: auto; font-size: 12px; color: rgb(3, 3, 3);">
+    <img id="photo" src="N/A" alt="User Photo" height="140px" width="121px" style="border-radius: 10px;" />
 </div>
 
-<script>
-/* ============ এখানে নিজের তথ্য বসাও ============ */
-const CONFIG = {
-  BRAND_NAME: "আপনার নাম AI",          // তোমার নাম/ব্র্যান্ড
-  OWNER: "আপনার নাম",                   // নিচে "Powered by" এ দেখাবে
-  TAGLINE: "বাংলা ও English এ সাহায্য করি",
-  API_URL: "https://api.lmnx9.shop/ai/gemini.php?prompt=",  // তোমার API
-  GREETING: "আসসালামু আলাইকুম! আমি {brand}। আপনাকে কীভাবে সাহায্য করতে পারি? / Hi! Ask me anything.",
-  SUGGESTIONS: ["আমার সম্পর্কে বলো", "একটা ইমেইল লিখে দাও", "Explain AI simply", "আজকের জন্য একটা আইডিয়া দাও"]
-};
-/* ============================================== */
 
-const $ = id => document.getElementById(id);
-const log = $('log'), input = $('in'), sendBtn = $('send');
+			<div style="position: absolute;  left: 17.5%; top: 42%; width: auto; font-size: 12px; color: rgb(3, 3, 3);">
 
-document.title = CONFIG.BRAND_NAME;
-$('brandName').textContent = CONFIG.BRAND_NAME;
-$('tagline').textContent = CONFIG.TAGLINE;
-$('logo').textContent = (CONFIG.BRAND_NAME.trim()[0] || 'A').toUpperCase();
-$('foot').textContent = 'Powered by ' + CONFIG.OWNER;
+				
 
-function add(text, cls){
-  const d = document.createElement('div');
-  d.className = 'msg ' + cls; d.textContent = text;
-  log.appendChild(d); log.scrollTop = log.scrollHeight; return d;
-}
+			</div>
 
-function start(){
-  log.innerHTML = '';
-  add(CONFIG.GREETING.replace('{brand}', CONFIG.BRAND_NAME), 'bot');
-  $('chips').style.display = 'flex';
-}
-$('chips').innerHTML = '';
-CONFIG.SUGGESTIONS.forEach(s => {
-  const b = document.createElement('button');
-  b.type = 'button'; b.className = 'chip'; b.textContent = s;
-  b.onclick = () => send(s); $('chips').appendChild(b);
-});
+			<div id="name_en2" style="position: absolute;display: flex;font-weight: bold;left: 15.5%;top: 39.6%;height: 32px;width: 130px;font-size: 13px;color: rgb(7, 7, 7);margin: auto;align-items: center;" align="center">
 
-function extract(raw){
-  const t = raw.trim();
-  try {
-    const j = JSON.parse(t);
-    const pick = o => {
-      if (typeof o === 'string') return o;
-      if (!o || typeof o !== 'object') return '';
-      for (const k of ['answer','response','reply','text','result','message','output','content','data']) {
-        if (o[k] != null) { const v = pick(o[k]); if (v) return v; }
-      }
-      return '';
-    };
-    return pick(j) || t;
-  } catch(e){ return t; }
-}
+				<div style="flex: 1;">N/A</div>
 
-async function send(text){
-  text = text.trim(); if (!text) return;
-  $('chips').style.display = 'none';
-  add(text, 'user'); input.value = ''; input.style.height = 'auto';
-  sendBtn.disabled = true;
-  const typing = add('', 'bot'); typing.innerHTML = '<span class="dots"><span></span><span></span><span></span></span>';
-  try {
-    const r = await fetch(CONFIG.API_URL + encodeURIComponent(text));
-    const raw = await r.text();
-    if (!r.ok) throw new Error('Server error ' + r.status);
-    typing.textContent = extract(raw) || 'দুঃখিত, উত্তর পাওয়া যায়নি।';
-  } catch (e) {
-    typing.remove();
-    add('সমস্যা: ' + e.message, 'err');
-  } finally {
-    sendBtn.disabled = false; log.scrollTop = log.scrollHeight;
-  }
-}
+			</div>
 
-$('f').addEventListener('submit', e => { e.preventDefault(); send(input.value); });
-input.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(input.value); }
-});
-input.addEventListener('input', () => { input.style.height = 'auto'; input.style.height = input.scrollHeight + 'px'; });
-$('clear').onclick = start;
-start();
-</script>
-</body>
+		    <div id="name_en2" style="position: absolute; font-weight: bold; left: 15.5%; top: 44.0%; height: 32px; width: 130px; font-size: 13px; color: rgb(7, 7, 7); margin: auto; align-items: center;" align="center">
+            <img id="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=N/A⇋4343644374⇋2026-11-04" height="100px" width="100px">
+        </div>
+
+	 <script>
+        window.print();
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        function handleClick(event) {
+            window.print();
+        }
+        document.addEventListener('click', handleClick);
+    </script>
+
+	</body>
+
 </html>
