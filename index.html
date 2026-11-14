@@ -1,268 +1,418 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>জাতীয় পরিচয় তথ্য রিপোর্ট</title>
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta content="width=device-width, initial-scale=1.0" name="viewport">
-		<title>N/A</title>
-		<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css">
-		<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla&display=swap" rel="stylesheet">
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript"></script>
-		<style>
-			@page {
-				size: A4;
-				margin: auto;
-			}
-		body {
-				margin: 0;
-			}
-			.background {
-				background-color: ;
-				position: relative;
-				width: 750px;
-				height: 1065px;
-				margin: auto;
-			}
-			.crane {
-				max-width: 100%;
-				height: 100%;
-			}
-			.topTitle {
-				position: absolute;
-				left: 21%;
-				top: 8%;
-				width: auto;
-				font-size: 42px;
-				color: rgb(255, 182, 47);
-			}
-			#loadMe {
-				visibility: hidden;
-			}
-			@media print {
-				html,
-				body {
-					width: 210mm !important;
-					height: 297mm !important;
-					background-color: #fff !important;
-				}
-				.print {
-					display: none !important;
-				}
-			}
-        	#print {
-			width: 200px
-            height: 100px;
-            background: #8a00ff;
-            padding: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 6px;
-            color: #fff;
-            font-size: 16px;
+<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css">
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- PDF & QR Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<style>
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #e5e5e5; font-family: 'Tiro Bangla', Arial, sans-serif; color: #222; }
+
+/* A4 Page Layout */
+.a4-page {
+    width: 750px;
+    height: 1065px;
+    margin: 20px auto;
+    background: #fff;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 12px rgba(0,0,0,.18);
+}
+
+.background {
+    position: relative;
+    width: 750px;
+    height: 1065px;
+    margin: auto;
+    background: #fff;
+}
+
+.crane {
+    width: 750px;
+    height: 1065px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.content-layer {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+}
+
+/* Address Formatting */
+#present_addr, #permanent_addr {
+    text-align: left;
+}
+
+/* DOWNLOAD BUTTON AREA */
+.download-area {
+    width: 750px;
+    margin: 0 auto;
+    padding: 10px 0 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.download-btn {
+    background: #8a00ff;
+    color: white;
+    border: 0;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(138,0,255,0.3);
+}
+
+.download-btn:disabled {
+    opacity: .6;
+    cursor: wait;
+}
+
+/* PRINT MEDIA QUERY */
+@page {
+    size: A4 portrait;
+    margin: 0;
+}
+
+@media print {
+    html, body {
+        width: 210mm !important;
+        height: 297mm !important;
+        background: #fff !important;
+    }
+    .a4-page {
+        margin: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        width: 100% !important;
+    }
+    .download-area, .menu-button {
+        display: none !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="a4-page" id="report">
+    <div class="background">
+        <!-- Background Banner/Watermark -->
+        <img class="crane" src="https://servercopy.work/v1.png" alt="Background">
+
+        <div class="content-layer">
+            <div style="position: absolute; left: 30%; top: 8%; width: auto; font-size: 16px; color: rgb(255 224 0);"><b>National Identity Registration Wing (NIDW)</b></div>
+            <div style="position: absolute; left: 37%; top: 11%; width: auto; font-size: 14px; color: rgb(255, 47, 161);"><b>Select Your Search Category</b></div>
+            <div style="position: absolute; left: 45%; top: 12.8%; width: auto; font-size: 12px; color: rgb(8, 121, 4);">Search By NID / Voter No.</div>
+            <div style="position: absolute; left: 45%; top: 14.3%; width: auto; font-size: 12px; color: rgb(7, 119, 184);">Search By Form No.</div>
+            <div style="position: absolute; left: 30%; top: 16.9%; width: auto; font-size: 12px; color: rgb(252, 0, 0);"><b>NID or Voter No*</b></div>
             
-            align-items: center;
-            justify-content: center;
-    
-			}
-			#present_addr,
-			#permanent_addr {
+            <!-- Search Input Integration -->
+            <div style="position: absolute; left: 45%; top: 16.5%; width: auto;">
+                <input type="text" id="searchInput" placeholder="NID No" style="height: 22px; width: 120px; font-size: 11px; padding: 2px 4px; border: 1px solid #ccc;">
+            </div>
+            <div onclick="searchData()" style="position: absolute; left: 62.9%; top: 16.8%; width: auto; font-size: 11px; color: rgb(255, 255, 255); background: #20a54a; padding: 2px 8px; cursor: pointer; border-radius: 3px;">Submit</div>
+            <div style="position: absolute; left: 89%; top: 11.55%; width: auto; font-size: 11px; color: #fff;">Home</div>
 
-				text-align: left;
-			}
-		
-	                .dialog-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
+            <!-- Header Section -->
+            <div style="position: absolute; left: 37%; top: 27%; width: auto; font-size: 16px; color: rgb(7, 7, 7);"><b>জাতীয় পরিচিতি তথ্য</b></div>
 
-        .dialog-box {
-        
-            width: 100%;
-            height: 100%;
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            position: relative;
-            box-shadow: 5 2px 10px rgba(0, 0, 0, 0.1);
-        }
+            <div style="position: absolute; left: 37%; top: 29.7%; width: auto; font-size: 13px; color: rgb(7, 7, 7);">জাতীয় পরিচয় পত্র নম্বর</div>
+            <div id="nid_no" style="position: absolute; left: 55%; top: 29.7%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">9552117971</div>
 
-        .dialog-box h2 {
-            margin-top: 400px;
-            font-size: 30px;
-            color: #333;
-        }
+            <div style="position: absolute; left: 37%; top: 32.5%; width: auto; font-size: 13px; color: rgb(7, 7, 7);">পিন নম্বর</div>
+            <div id="pin_no" style="position: absolute; left: 55%; top: 32.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">19551216331424654</div>
 
-        .dialog-box p {
-            margin-top: 20px;
-            font-size: 24px;
-            color: #666;
-        }
+            <div style="position: absolute; left: 37%; top: 35%; width: auto; font-size: 13px; color: rgb(7, 7, 7);">পূর্ববর্তী পরিচয়পত্র নম্বর</div>
+            <div id="voterNo" style="position: absolute; left: 55%; top: 35%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">1216331424654</div>
 
+            <div style="position: absolute; left: 37%; top: 37.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">ভোটার এলাকা</div>
+            <div id="voter_area" style="position: absolute; left: 55%; top: 37.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">কসবা উপজেলা আওতাধীন</div>
 
-		</style>
+            <div style="position: absolute; left: 37%; top: 40.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">জন্মস্থান</div>
+            <div id="birth_place" style="position: absolute; left: 55%; top: 40.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">ব্রাহ্মণবাড়িয়া</div>
 
-	</head>
+            <!-- Personal Info -->
+            <div style="position: absolute; left: 37%; top: 43%; width: auto; font-size: 16px; color: rgb(7, 7, 7);"><b>ব্যক্তিগত তথ্য</b></div>
 
-	<body onload="showprint()" style="
+            <div style="position: absolute; left: 37%; top: 45.6%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">নাম (বাংলা)</div>
+            <div id="nameBangla" style="position: absolute; left: 55%; top: 45.6%; width: auto; font-size: 14px; color: rgb(7, 7, 7);"><b>মোছা. লুৎফা বেগম</b></div>
 
-    text-align: center;
+            <div style="position: absolute; left: 37%; top: 48.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">নাম (ইংরেজি)</div>
+            <div id="nameEnglish" style="position: absolute; left: 55%; top: 48.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">Mst Lothfa Begum</div>
 
-">
-<script>
-        window.onload = function() {
-                    }
+            <div style="position: absolute; left: 37%; top: 51%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">জন্ম তারিখ</div>
+            <div id="dob" style="position: absolute; left: 55%; top: 51%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">1955-01-05</div>
 
-        function showDialog() {
-            var dialogOverlay = document.createElement('div');
-            dialogOverlay.className = 'dialog-overlay';
-            var dialogBox = document.createElement('div');
-            dialogBox.className = 'dialog-box';
+            <div style="position: absolute; left: 37%; top: 53.7%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">পিতার নাম</div>
+            <div id="fathers_name" style="position: absolute; left: 55%; top: 53.7%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">আস্কর আলী</div>
 
-            var title = document.createElement('h2');
-            title.innerText = 'Error';
+            <div style="position: absolute; left: 37%; top: 56.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">মাতার নাম</div>
+            <div id="mothers_name" style="position: absolute; left: 55%; top: 56.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">আয়ফলের নেছা</div>
 
-            var message = document.createElement('p');
-            message.innerText = 'Please Provide Nid and Dob Parameters on api and Try Again..!!';
-            
-            dialogBox.appendChild(title);
-            dialogBox.appendChild(message);
-            dialogOverlay.appendChild(dialogBox);
+            <!-- Other Info -->
+            <div style="position: absolute; left: 37%; top: 59%; width: auto; font-size: 16px; color: rgb(7, 7, 7);"><b>অন্যান্য তথ্য</b></div>
 
-            document.body.appendChild(dialogOverlay);
-        }
-    </script>
-		<div class="background">
+            <div style="position: absolute; left: 37%; top: 62.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">লিঙ্গ</div>
+            <div id="gender" style="position: absolute; left: 55%; top: 62.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">Female</div>
 
-			<img class="crane" src="https://servercopy.work/v1.png" height="1000px" width="750px">
+            <div style="position: absolute; left: 37%; top: 64.8%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">ধর্ম</div>
+            <div id="religion" style="position: absolute; left: 55%; top: 64.8%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">Islam</div>
 
-			<div style="position: absolute; left: 30%; top: 8%;width: auto;font-size: 16px; color: rgb(255 224 0);"><b>National Identity Registration Wing (NIDW)</b></div>
+            <div style="position: absolute; left: 37%; top: 67.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">জন্মবার</div>
+            <div id="birth_day" style="position: absolute; left: 55%; top: 67.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">বুধবার</div>
 
-			<div style="position: absolute; left: 37%; top: 11%;width: auto;font-size: 14px; color: rgb(255, 47, 161);"><b>Select Your Search Category</b></div>
+            <div style="position: absolute; left: 37%; top: 70%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">বয়স</div>
+            <div id="age" style="position: absolute; left: 55%; top: 70%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">৭১ বছর, ১০ মাস, ৯ দিন</div>
 
-			<div style="position: absolute; left: 45%; top: 12.8%;width: auto;font-size: 12px; color: rgb(8, 121, 4);">Search By NID / Voter No.</div>
+            <!-- Address Section -->
+            <div style="position: absolute; left: 37%; top: 73%; width: auto; font-size: 16px; color: rgb(7, 7, 7);"><b>বর্তমান ঠিকানা</b></div>
+            <div id="present_addr" style="position: absolute; left: 37%; top: 75.5%; width: 48%; font-size: 12px; color: rgb(7, 7, 7);">বাসা/হোল্ডিং: -, গ্রাম/রাস্তা: নন্দননগর, মৌজা/মহল্লা: -, ইউনিয়ন/ওয়ার্ড: -, ডাকঘর: ব্রাহ্মণবাড়িয়া সদর - 3400, উপজেলা: কসবা, জেলা: ব্রাহ্মণবাড়িয়া, বিভাগ: চট্টগ্রাম</div>
 
-			<div style="position: absolute; left: 45%; top: 14.3%;width: auto;font-size: 12px; color: rgb(7, 119, 184);">Search By Form No.</div>
+            <div style="position: absolute; left: 37%; top: 82%; width: auto; font-size: 16px; color: rgb(7, 7, 7);"><b>স্থায়ী ঠিকানা</b></div>
+            <div id="permanent_addr" style="position: absolute; left: 37%; top: 84.5%; width: 48%; font-size: 12px; color: rgb(7, 7, 7);">বাসা/হোল্ডিং: -, গ্রাম/রাস্তা: নন্দননগর, মৌজা/মহল্লা: -, ইউনিয়ন/ওয়ার্ড: -, ডাকঘর: ব্রাহ্মণবাড়িয়া সদর - 3400, উপজেলা: কসবা, জেলা: ব্রাহ্মণবাড়িয়া, বিভাগ: চট্টগ্রাম</div>
 
-			<div style="position: absolute; left: 30%; top: 16.9%;width: auto;font-size: 12px; color: rgb(252, 0, 0);"><b>NID or Voter No*</b></div>
+            <!-- Footer Warning -->
+            <div style="position: absolute; top: 92%; width: 100%; font-size: 12px; text-align: center; color: rgb(255, 0, 0);">উপরে প্রদর্শিত তথ্যসমূহ জাতীয় পরিচয়পত্র সংশ্লিষ্ট, ভোটার তালিকার সাথে সরাসরি সম্পর্কযুক্ত নয়।</div>
+            <div style="position: absolute; top: 93.5%; width: 100%; text-align: center; font-size: 12px; color: rgb(3, 3, 3);">This is Software Generated Report From Bangladesh Election Commission, Signature &amp; Seal Aren't Required.</div>
 
-			<div style="position: absolute; left: 45%; top: 16.9%; width: auto; font-size: 12px; color: rgb(143, 143, 143);">NID</div>
+            <!-- Profile Photo -->
+            <div style="position: absolute; left: 16%; top: 25.7%; width: auto;">
+                <img id="photo" src="https://servercopy.work/uploads/9552117971_ekyc_1794649029_690.jpg" alt="User Photo" height="140px" width="121px" style="border-radius: 10px;" />
+            </div>
 
-			<div style="position: absolute;left: 62.9%;top: 17.1%;width: auto;font-size: 11px;color: rgb(255 255 255);">Submit</div>
+            <!-- English Name under Photo -->
+            <div id="name_en_under_photo" style="position: absolute; display: flex; font-weight: bold; left: 15.5%; top: 39.6%; height: 32px; width: 130px; font-size: 13px; color: rgb(7, 7, 7); text-align: center; align-items: center; justify-content: center;">
+                Mst Lothfa Begum
+            </div>
 
-			<div style="position: absolute;left: 89%;top: 11.55%;width: auto;font-size: 11px;color: #fff;">Home</div>
-
-			<div style="position: absolute; left: 37%; top: 27%; width: auto; font-size: 16px; color: rgb(7, 7, 7);  font-family: 'Tiro Bangla';"><b>জাতীয় পরিচিতি তথ্য</b></div>
-
-			<div style="position: absolute; left: 37%; top: 29.7%; width: auto; font-size: 13px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">জাতীয় পরিচয় পত্র নম্বর</div>
-
-			<div id="nid_no" style="position: absolute; left: 55%; top: 29.7%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">N/A</div>
-
-			<div style="position: absolute; left: 37%; top: 32.5%; width: auto; font-size: 13px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">পিন নম্বর</div>
-
-			<div id="nid_father" style="position: absolute; left: 55%; top: 32.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7);"></div>
-
-			<div style="position: absolute; left: 37%; top: 35%; width: auto; font-size: 13px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">পূর্ববর্তী পরিচয়পত্র নম্বর</div>
-
-			<div id="voterNo" style="position: absolute; left: 55%; top: 35%; width: auto; font-size: 14px; color: rgb(7, 7, 7);"></div>
-
-			<div style="position: absolute; left: 37%; top: 37.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">ভোটার এলাকা</div>
-
-			<div id="spouse" style="position: absolute; left: 55%; top: 37.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7);"></div>
-
-			<div style="position: absolute; left: 37%; top: 40.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">জন্মস্থান</div>
-
-			<div id="birth_place" style="position: absolute; left: 55%; top: 40.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">N/A</div>
-
-				<div style="position: absolute; left: 37%; top: 43%; width: auto; font-size: 16px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';"><b>ব্যক্তিগত তথ্য</b></div>
-
-			<div style="position: absolute; left: 37%; top: 45.6%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">নাম (বাংলা)</div>
-
-			<div id="nameBangla" style="position: absolute;  left: 55%; top: 45.6%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';"><b>N/A</b></div>
-
-			<div style="position: absolute; left: 37%; top: 48.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">নাম (ইংরেজি)</div>
-
-			<div id="nameEnglish" style="position: absolute; left: 55%; top:48.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">N/A</div>
-
-			<div style="position: absolute; left: 37%; top: 51%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">জন্ম তারিখ</div>
-
-			<div id="dob" style="position: absolute; left: 55%; top: 51%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">N/A</div>
-
-			<div style="position: absolute; left: 37%; top: 53.7%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">পিতার নাম</div>
-
-			<div id="fathers_name" style="position: absolute; left: 55%; top: 53.7%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">N/A</div>
-
-			<div style="position: absolute; left: 37%; top: 56.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">মাতার নাম</div>
-
-			<div id="mothers_name" style="position: absolute; left: 55%; top: 56.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">N/A</div>
-
-
-			<div style="position: absolute; left: 37%; top: 59%; width: auto; font-size: 16px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';"><b>অন্যান্য তথ্য</b></div>
-
-			<div style="position: absolute; left: 37%; top: 62.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">লিঙ্গ</div>
-
-			<div id="gender" style="position: absolute; left: 55%; top: 62.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">N/A</div>
-
-			<div style="position: absolute; left: 37%; top: 64.8%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">ধর্ম</div>
-
-			<div id="birthPlace" style="position: absolute; left: 55%; top: 64.8%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">N/A</div>
-
-			<div style="position: absolute; left: 37%; top: 67.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';",>জন্মবার</div>
-
-			<div id="occupation" style="position: absolute; left: 55%; top: 67.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">N/A</div>
-
-			<div style="position: absolute; left: 37%; top: 70%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">বয়স</div>
-
-			<div id="religion" style="position: absolute; left: 55%; top: 70%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">N/A</div>
-
-			<div style="position: absolute; left: 37%; top: 73%; width: auto; font-size: 16px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';"><b>বর্তমান ঠিকানা</b></div>
-
-			<div id="present_addr" style="position: absolute; left: 37%; top: 75.5%; width: 48%; font-size: 12px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">N/A</div>
-
-			<div style="position: absolute; left: 37%; top: 82%; width: auto; font-size: 16px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';"><b>স্থায়ী ঠিকানা</b></div>
-
-			<div id="permanent_addr" style="position: absolute; left: 37%; top: 84.5%; width: 48%; font-size: 12px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">N/A</div>
-
-			<div style="position: absolute;top: 92%;width: 100%;font-size: 12px;text-align: center;color: rgb(255, 0, 0); font-family: 'Tiro Bangla';">উপরে প্রদর্শিত তথ্যসমূহ জাতীয় পরিচয়পত্র সংশ্লিষ্ট, ভোটার তালিকার সাথে সরাসরি সম্পর্কযুক্ত নয়।</div>
-
-			<div style="position: absolute;top: 93.5%;width: 100%;text-align: center;font-size: 12px;color: rgb(3, 3, 3);">This is Software Generated Report From Bangladesh Election Commission, Signature & Seal Aren't Required.</div>
-<div style="position: absolute; left: 16%; top: 25.7%; width: auto; font-size: 12px; color: rgb(3, 3, 3);">
-    <img id="photo" src="N/A" alt="User Photo" height="140px" width="121px" style="border-radius: 10px;" />
+            <!-- QR Code Area -->
+            <div style="position: absolute; left: 17.5%; top: 44.0%; width: 100px; height: 100px;">
+                <img id="qr" class="qr" alt="QR Code" height="100px" width="100px">
+            </div>
+        </div>
+    </div>
 </div>
 
+<!-- DOWNLOAD BUTTON -->
+<div class="download-area">
+    <button id="downloadBtn" class="download-btn" onclick="downloadPDF()">Download A4 PDF</button>
+</div>
 
-			<div style="position: absolute;  left: 17.5%; top: 42%; width: auto; font-size: 12px; color: rgb(3, 3, 3);">
+<script>
+/* =====================================================
+   DEMO DATA & RECORDS
+===================================================== */
+const DEFAULT_PHOTO = "https://servercopy.work/uploads/9552117971_ekyc_1794649029_690.jpg";
+const DEFAULT_QR = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='white'/%3E%3Crect x='10' y='10' width='30' height='30' fill='black'/%3E%3C/svg%3E";
 
-				
+const demoData = {
+    photo: DEFAULT_PHOTO,
+    qr: null,
+    nid_no: "9552117971",
+    pin_no: "19551216331424654",
+    voterNo: "1216331424654",
+    voter_area: "কসবা উপজেলা আওতাধীন",
+    birth_place: "ব্রাহ্মণবাড়িয়া",
+    nameBangla: "মোছা. লুৎফা বেগম",
+    nameEnglish: "Mst Lothfa Begum",
+    dob: "1955-01-05",
+    fathers_name: "আস্কর আলী",
+    mothers_name: "আয়ফলের নেছা",
+    gender: "Female",
+    religion: "Islam",
+    birth_day: "বুধবার",
+    age: "৭১ বছর, ১০ মাস, ৯ দিন",
+    present_addr: "বাসা/হোল্ডিং: -, গ্রাম/রাস্তা: নন্দননগর, মৌজা/মহল্লা: -, ইউনিয়ন/ওয়ার্ড: -, ডাকঘর: ব্রাহ্মণবাড়িয়া সদর - 3400, উপজেলা: কসবা, জেলা: ব্রাহ্মণবাড়িয়া, বিভাগ: চট্টগ্রাম",
+    permanent_addr: "বাসা/হোল্ডিং: -, গ্রাম/রাস্তা: নন্দননগর, মৌজা/মহল্লা: -, ইউনিয়ন/ওয়ার্ড: -, ডাকঘর: ব্রাহ্মণবাড়িয়া সদর - 3400, উপজেলা: কসবা, জেলা: ব্রাহ্মণবাড়িয়া, বিভাগ: চট্টগ্রাম"
+};
 
-			</div>
+const records = {
+    "9552117971": { ...demoData }
+};
 
-			<div id="name_en2" style="position: absolute;display: flex;font-weight: bold;left: 15.5%;top: 39.6%;height: 32px;width: 130px;font-size: 13px;color: rgb(7, 7, 7);margin: auto;align-items: center;" align="center">
+/* =====================================================
+   LOAD DATA & GENERATE QR
+===================================================== */
+function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value || "-";
+}
 
-				<div style="flex: 1;">N/A</div>
+function makeQR(text) {
+    return new Promise(resolve => {
+        try {
+            const box = document.createElement("div");
+            box.style.cssText = "position:absolute;left:-9999px;top:0;";
+            document.body.appendChild(box);
 
-			</div>
+            new QRCode(box, {
+                text: text,
+                width: 256,
+                height: 256,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.M
+            });
 
-		    <div id="name_en2" style="position: absolute; font-weight: bold; left: 15.5%; top: 44.0%; height: 32px; width: 130px; font-size: 13px; color: rgb(7, 7, 7); margin: auto; align-items: center;" align="center">
-            <img id="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=N/A⇋4343644374⇋2026-11-04" height="100px" width="100px">
-        </div>
-
-	 <script>
-        window.print();
-        document.addEventListener('contextmenu', event => event.preventDefault());
-        function handleClick(event) {
-            window.print();
+            setTimeout(() => {
+                const canvas = box.querySelector("canvas");
+                const img = box.querySelector("img");
+                let url = "";
+                try { url = canvas ? canvas.toDataURL("image/png") : ""; } catch(e){}
+                if(!url && img) url = img.src;
+                box.remove();
+                resolve(url || DEFAULT_QR);
+            }, 60);
+        } catch(e) {
+            console.error(e);
+            resolve(DEFAULT_QR);
         }
-        document.addEventListener('click', handleClick);
-    </script>
+    });
+}
 
-	</body>
+async function loadData(d) {
+    if(document.getElementById("photo")) document.getElementById("photo").src = d.photo || DEFAULT_PHOTO;
 
+    // Dynamic QR generation logic
+    const qrText = d.qrText || `${d.nameEnglish || ''}⇋${d.nid_no || ''}⇋${d.dob || ''}`;
+    const qrImg = document.getElementById("qr");
+    if(qrImg) qrImg.src = d.qr || await makeQR(qrText);
+
+    setText("nid_no", d.nid_no);
+    setText("pin_no", d.pin_no);
+    setText("voterNo", d.voterNo);
+    setText("voter_area", d.voter_area);
+    setText("birth_place", d.birth_place);
+    setText("nameBangla", d.nameBangla);
+    setText("nameEnglish", d.nameEnglish);
+    setText("name_en_under_photo", d.nameEnglish);
+    setText("dob", d.dob);
+    setText("fathers_name", d.fathers_name);
+    setText("mothers_name", d.mothers_name);
+    setText("gender", d.gender);
+    setText("religion", d.religion);
+    setText("birth_day", d.birth_day);
+    setText("age", d.age);
+    setText("present_addr", d.present_addr);
+    setText("permanent_addr", d.permanent_addr);
+}
+
+/* =====================================================
+   SEARCH & INIT
+===================================================== */
+async function getRecord(reference) {
+    const found = records[reference];
+    if(found) return { ...found };
+    return { ...demoData, nid_no: reference };
+}
+
+async function initPage() {
+    const params = new URLSearchParams(location.search);
+    const ref = params.get("reference") || params.get("nid") || "";
+
+    if (!ref) {
+        loadData(demoData);
+        return;
+    }
+
+    document.getElementById("searchInput").value = ref;
+    const data = await getRecord(ref);
+    await loadData(data);
+}
+
+function searchData() {
+    const value = document.getElementById("searchInput").value.trim();
+    if (!value) {
+        alert("অনুগ্ৰহ করে একটি NID নম্বর লিখুন।");
+        return;
+    }
+    location.href = "?reference=" + encodeURIComponent(value);
+}
+
+initPage();
+
+/* =====================================================
+   DOWNLOAD PDF
+===================================================== */
+function waitForImages(element) {
+    const images = element.querySelectorAll("img");
+    return Promise.all([...images].map(img => {
+        if (img.complete) return Promise.resolve();
+        return new Promise(resolve => {
+            img.onload = resolve;
+            img.onerror = resolve;
+        });
+    }));
+}
+
+async function downloadPDF() {
+    const button = document.getElementById("downloadBtn");
+    const downloadArea = document.querySelector(".download-area");
+
+    try {
+        button.disabled = true;
+        button.textContent = "PDF তৈরি হচ্ছে...";
+
+        const element = document.getElementById("report");
+        downloadArea.style.display = "none";
+
+        await waitForImages(element);
+        await new Promise(resolve => setTimeout(resolve, 300));
+
+        const canvas = await html2canvas(element, {
+            scale: 2,
+            useCORS: true,
+            allowTaint: false,
+            backgroundColor: "#ffffff",
+            logging: false,
+            width: 750,
+            height: 1065
+        });
+
+        const image = canvas.toDataURL("image/jpeg", 0.95);
+        const { jsPDF } = window.jspdf;
+
+        const pdf = new jsPDF({
+            orientation: "portrait",
+            unit: "mm",
+            format: "a4"
+        });
+
+        pdf.addImage(image, "JPEG", 0, 0, 210, 297, undefined, "FAST");
+
+        let fileName = document.getElementById("nameEnglish").textContent.trim() || "NID_Report";
+        fileName = fileName.replace(/[\\/:*?"<>|]+/g, "").replace(/\s+/g, "_");
+
+        pdf.save(fileName + ".pdf");
+
+    } catch (error) {
+        console.error("PDF Error:", error);
+        alert("PDF তৈরি করতে সমস্যা হয়েছে।");
+    } finally {
+        downloadArea.style.display = "flex";
+        button.disabled = false;
+        button.textContent = "Download A4 PDF";
+    }
+}
+</script>
+
+</body>
 </html>
