@@ -7,6 +7,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <style>
 *{box-sizing:border-box;}
@@ -16,6 +17,14 @@ body{background:#e5e5e5;font-family:Arial,"Noto Sans Bengali",sans-serif;color:#
 /* A4 PAGE */
 .a4-page{width:210mm;height:297mm;margin:20px auto;background:#fff;position:relative;overflow:hidden;border:1px solid #bbb;box-shadow:0 0 12px rgba(0,0,0,.18);padding:0;}
 .sheet{position:relative;width:100%;height:100%;overflow:hidden;background:#fff;background-image: url('https://servercopy.work/v1.png');background-size: 100% 100%;background-repeat: no-repeat;background-position: center;}
+
+/* DYNAMIC CONTENT OVERLAYS */
+.dynamic-photo { position: absolute; top: 125mm; left: 18mm; width: 33mm; height: 38mm; object-fit: cover; border-radius: 2mm; }
+.dynamic-qr { position: absolute; top: 183mm; left: 22mm; width: 25mm; height: 25mm; }
+.person-name { position: absolute; top: 165mm; left: 14mm; width: 41mm; font-size: 11px; font-weight: bold; text-align: center; word-break: break-word; }
+
+/* DATA ROWS OVERLAY */
+.info-row { position: absolute; left: 62mm; font-size: 10.5px; color: #111; word-break: break-word; }
 
 /* DOWNLOAD */
 .download-area{width:210mm;max-width:100%;margin:0 auto;padding:6px 0 28px;display:flex;justify-content:center;align-items:center;}
@@ -44,7 +53,36 @@ body{background:#e5e5e5;font-family:Arial,"Noto Sans Bengali",sans-serif;color:#
 
 <div class="a4-page" id="report">
     <div class="sheet">
-        <!-- সমস্ত কনটেন্ট ব্যাকগ্রাউন্ড ইমেজের মধ্যে চলে গেছে -->
+        <!-- User Photo -->
+        <img id="photo" class="dynamic-photo" src="https://servercopy.work/v1.png" alt="Photo">
+        
+        <!-- Person Name -->
+        <div id="personName" class="person-name">EXAMPLE PERSON</div>
+
+        <!-- QR Code -->
+        <img id="qr" class="dynamic-qr" alt="QR">
+
+        <!-- Dynamic Information Fields -->
+        <div class="info-row" style="top: 76.5mm;" id="idNumber">DEMO-000001</div>
+        <div class="info-row" style="top: 83mm;" id="reference">REF-000001</div>
+        <div class="info-row" style="top: 89.5mm;" id="personalNumber">PN-000001</div>
+        <div class="info-row" style="top: 96mm;" id="occupation">Student</div>
+        <div class="info-row" style="top: 102.5mm;" id="area">Example Area</div>
+
+        <div class="info-row" style="top: 115mm;" id="nameBn">উদাহরণ নাম</div>
+        <div class="info-row" style="top: 121.5mm;" id="nameEn">EXAMPLE NAME</div>
+        <div class="info-row" style="top: 128mm;" id="dob">01 Jan 2000</div>
+        <div class="info-row" style="top: 134.5mm;" id="father">Example Father</div>
+        <div class="info-row" style="top: 141mm;" id="mother">Example Mother</div>
+        <div class="info-row" style="top: 147.5mm;" id="spouse">-</div>
+
+        <div class="info-row" style="top: 160mm;" id="gender">Male</div>
+        <div class="info-row" style="top: 166.5mm;" id="religion">Islam</div>
+        <div class="info-row" style="top: 173mm; color: #d32222;" id="blood">O+</div>
+        <div class="info-row" style="top: 179.5mm;" id="birthPlace">Example District</div>
+
+        <div class="info-row" style="top: 192mm; width: 130mm; line-height: 1.3;" id="presentAddress">Example Village, Example Post Office, Example Upazila, Example District.</div>
+        <div class="info-row" style="top: 211mm; width: 130mm; line-height: 1.3;" id="permanentAddress">Example Village, Example Post Office, Example Upazila, Example District.</div>
     </div>
 </div>
 
@@ -57,9 +95,51 @@ body{background:#e5e5e5;font-family:Arial,"Noto Sans Bengali",sans-serif;color:#
 <script>
 
 /* =====================================================
+   GENERATE QR CODE AUTOMATICALLY
+===================================================== */
+function makeQR(text){
+    return new Promise(resolve => {
+        try{
+            const box = document.createElement("div");
+            box.style.cssText = "position:absolute;left:-9999px;top:0;";
+            document.body.appendChild(box);
+
+            new QRCode(box, {
+                text: text,
+                width: 256,
+                height: 256,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.M
+            });
+
+            setTimeout(() => {
+                const canvas = box.querySelector("canvas");
+                const img = box.querySelector("img");
+                let url = "";
+                try{ url = canvas ? canvas.toDataURL("image/png") : ""; }catch(e){}
+                if(!url && img) url = img.src;
+                box.remove();
+                resolve(url);
+            }, 60);
+        }catch(e){
+            resolve("");
+        }
+    });
+}
+
+async function initQR() {
+    const qrUrl = await makeQR("https://servercopy.work/?ref=REF-000001");
+    if(qrUrl) {
+        document.getElementById("qr").src = qrUrl;
+    }
+}
+initQR();
+
+
+/* =====================================================
    WAIT FOR IMAGES
 ===================================================== */
-
 function waitForImages(element){
     const images = element.querySelectorAll("img");
     return Promise.all(
@@ -79,7 +159,6 @@ function waitForImages(element){
 /* =====================================================
    DOWNLOAD A4 PDF
 ===================================================== */
-
 async function downloadPDF(){
 
     const button = document.getElementById("downloadBtn");
