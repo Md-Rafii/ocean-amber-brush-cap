@@ -45,11 +45,20 @@
             width: 100%;
             height: 100%;
         }
-        /* সব লেখার সাইজ ও ফন্ট সমান রাখার জন্য */
-        .content-layer div {
-            font-family: 'Tiro Bangla', Arial, sans-serif;
-            font-size: 14px;
-            color: rgb(7, 7, 7);
+
+        /* সব ডাটা ফিল্ডের ফন্ট, সাইজ এবং লাইন-হাইট একদম সমান করার জন্য */
+        .content-layer div[style*="position: absolute"] {
+            font-family: 'Tiro Bangla', Arial, sans-serif !important;
+            font-size: 14px !important;
+            line-height: 1.2 !important;
+            color: rgb(7, 7, 7) !important;
+            font-weight: normal !important;
+        }
+
+        /* হেডিং বা বোল্ড টেক্সটগুলোর জন্য */
+        .content-layer b {
+            font-family: 'Tiro Bangla', Arial, sans-serif !important;
+            font-weight: bold !important;
         }
 
         /* Download Button Area */
@@ -100,29 +109,20 @@
         <img class="crane" src="https://servercopy.work/v1.png" alt="Background">
 
         <div class="content-layer">
-            <!-- টপ হেডার ও সার্চ ইন্টিগ্রেশন -->
-            <div style="position: absolute; left: 30%; top: 8%; width: auto; font-size: 16px; color: rgb(255 224 0);"><b>National Identity Registration Wing (NIDW)</b></div>
-            <div style="position: absolute; left: 37%; top: 11%; width: auto; font-size: 14px; color: rgb(255, 47, 161);"><b>Select Your Search Category</b></div>
-            <div style="position: absolute; left: 45%; top: 12.8%; width: auto; font-size: 12px; color: rgb(8, 121, 4);">Search By NID / Voter No.</div>
-            <div style="position: absolute; left: 45%; top: 14.3%; width: auto; font-size: 12px; color: rgb(7, 119, 184);">Search By Form No.</div>
-            <div style="position: absolute; left: 30%; top: 16.9%; width: auto; font-size: 12px; color: rgb(252, 0, 0);"><b>NID or Voter No*</b></div>
-            
-            <div style="position: absolute; left: 45%; top: 16.5%;">
-                <input type="text" id="searchInput" placeholder="NID No" style="height: 22px; width: 120px; font-size: 11px; padding: 2px 4px; border: 1px solid #ccc;">
-            </div>
-            <div onclick="searchData()" style="position: absolute; left: 62.9%; top: 16.8%; font-size: 11px; color: rgb(255 255 255); background: #20a54a; padding: 2px 8px; cursor: pointer; border-radius: 3px;">Submit</div>
-            <div style="position: absolute; left: 89%; top: 11.55%; width: auto; font-size: 11px; color: #fff;">Home</div>
+            <!-- হেডার টাইটেল -->
+            <div style="position: absolute; left: 30%; top: 8%; width: auto; font-size: 16px !important; color: rgb(255 224 0) !important;"><b>National Identity Registration Wing (NIDW)</b></div>
+            <div style="position: absolute; left: 89%; top: 11.55%; width: auto; font-size: 11px !important; color: #fff !important;">Home</div>
 
             <!-- জাতীয় পরিচিতি তথ্য -->
-            <div style="position: absolute; left: 37%; top: 27%; width: auto; font-size: 16px;"><b>জাতীয় পরিচিতি তথ্য</b></div>
+            <div style="position: absolute; left: 37%; top: 27%; width: auto; font-size: 16px !important;"><b>জাতীয় পরিচিতি তথ্য</b></div>
 
-            <div style="position: absolute; left: 37%; top: 29.7%; width: auto; font-size: 13px;">জাতীয় পরিচয় পত্র নম্বর</div>
+            <div style="position: absolute; left: 37%; top: 29.7%; width: auto; font-size: 13px !important;">জাতীয় পরিচয় পত্র নম্বর</div>
             <div id="nid_no" style="position: absolute; left: 55%; top: 29.7%; width: auto;">9552117971</div>
 
-            <div style="position: absolute; left: 37%; top: 32.5%; width: auto; font-size: 13px;">পিন নম্বর</div>
+            <div style="position: absolute; left: 37%; top: 32.5%; width: auto; font-size: 13px !important;">পিন নম্বর</div>
             <div id="nid_father" style="position: absolute; left: 55%; top: 32.5%; width: auto;">19551216331424654</div>
 
-            <div style="position: absolute; left: 37%; top: 35%; width: auto; font-size: 13px;">পূর্ববর্তী পরিচয়পত্র নম্বর</div>
+            <div style="position: absolute; left: 37%; top: 35%; width: auto; font-size: 13px !important;">পূর্ববর্তী পরিচয়পত্র নম্বর</div>
             <div id="voterNo" style="position: absolute; left: 55%; top: 35%; width: auto;">1216331424654</div>
 
             <div style="position: absolute; left: 37%; top: 37.5%; width: auto;">ভোটার এলাকা</div>
@@ -132,7 +132,7 @@
             <div id="birth_place" style="position: absolute; left: 55%; top: 40.2%; width: auto;">ব্রাহ্মণবাড়িয়া</div>
 
             <!-- ব্যক্তিগত তথ্য -->
-            <div style="position: absolute; left: 37%; top: 43%; width: auto; font-size: 16px;"><b>ব্যক্তিগত তথ্য</b></div>
+            <div style="position: absolute; left: 37%; top: 43%; width: auto; font-size: 16px !important;"><b>ব্যক্তিগত তথ্য</b></div>
 
             <div style="position: absolute; left: 37%; top: 45.6%; width: auto;">নাম (বাংলা)</div>
             <div id="nameBangla" style="position: absolute; left: 55%; top: 45.6%; width: auto;"><b>মোছা. লুৎফা বেগম</b></div>
@@ -150,7 +150,7 @@
             <div id="mothers_name" style="position: absolute; left: 55%; top: 56.2%; width: auto;">আয়ফলের নেছা</div>
 
             <!-- অন্যান্য তথ্য -->
-            <div style="position: absolute; left: 37%; top: 59%; width: auto; font-size: 16px;"><b>অন্যান্য তথ্য</b></div>
+            <div style="position: absolute; left: 37%; top: 59%; width: auto; font-size: 16px !important;"><b>অন্যান্য তথ্য</b></div>
 
             <div style="position: absolute; left: 37%; top: 62.2%; width: auto;">লিঙ্গ</div>
             <div id="gender" style="position: absolute; left: 55%; top: 62.2%; width: auto;">Female</div>
@@ -165,27 +165,27 @@
             <div id="religion" style="position: absolute; left: 55%; top: 70%; width: auto;">৭১ বছর, ১০ মাস, ৯ দিন</div>
 
             <!-- ঠিকানা -->
-            <div style="position: absolute; left: 37%; top: 73%; width: auto; font-size: 16px;"><b>বর্তমান ঠিকানা</b></div>
-            <div id="present_addr" style="position: absolute; left: 37%; top: 75.5%; width: 48%; font-size: 12px; text-align: left;">বাসা/হোল্ডিং: -, গ্রাম/রাস্তা: নন্দননগর, মৌজা/মহল্লা: -, ইউনিয়ন/ওয়ার্ড: -, ডাকঘর: ব্রাহ্মণবাড়িয়া সদর - 3400, উপজেলা: কসবা, জেলা: ব্রাহ্মণবাড়িয়া, বিভাগ: চট্টগ্রাম</div>
+            <div style="position: absolute; left: 37%; top: 73%; width: auto; font-size: 16px !important;"><b>বর্তমান ঠিকানা</b></div>
+            <div id="present_addr" style="position: absolute; left: 37%; top: 75.5%; width: 48%; font-size: 12px !important; text-align: left;">বাসা/হোল্ডিং: -, গ্রাম/রাস্তা: নন্দননগর, মৌজা/মহল্লা: -, ইউনিয়ন/ওয়ার্ড: -, ডাকঘর: ব্রাহ্মণবাড়িয়া সদর - 3400, উপজেলা: কসবা, জেলা: ব্রাহ্মণবাড়িয়া, বিভাগ: চট্টগ্রাম</div>
 
-            <div style="position: absolute; left: 37%; top: 82%; width: auto; font-size: 16px;"><b>স্থায়ী ঠিকানা</b></div>
-            <div id="permanent_addr" style="position: absolute; left: 37%; top: 84.5%; width: 48%; font-size: 12px; text-align: left;">বাসা/হোল্ডিং: -, গ্রাম/রাস্তা: নন্দননগর, মৌজা/মহল্লা: -, ইউনিয়ন/ওয়ার্ড: -, ডাকঘর: ব্রাহ্মণবাড়িয়া সদর - 3400, উপজেলা: কসবা, জেলা: ব্রাহ্মণবাড়িয়া, বিভাগ: চট্টগ্রাম</div>
+            <div style="position: absolute; left: 37%; top: 82%; width: auto; font-size: 16px !important;"><b>স্থায়ী ঠিকানা</b></div>
+            <div id="permanent_addr" style="position: absolute; left: 37%; top: 84.5%; width: 48%; font-size: 12px !important; text-align: left;">বাসা/হোল্ডিং: -, গ্রাম/রাস্তা: নন্দননগর, মৌজা/মহল্লা: -, ইউনিয়ন/ওয়ার্ড: -, ডাকঘর: ব্রাহ্মণবাড়িয়া সদর - 3400, উপজেলা: কসবা, জেলা: ব্রাহ্মণবাড়িয়া, বিভাগ: চট্টগ্রাম</div>
 
             <!-- ফুটার ওয়ার্নিং -->
-            <div style="position: absolute; top: 92%; width: 100%; font-size: 12px; text-align: center; color: rgb(255, 0, 0);">উপরে প্রদর্শিত তথ্যসমূহ জাতীয় পরিচয়পত্র সংশ্লিষ্ট, ভোটার তালিকার সাথে সরাসরি সম্পর্কযুক্ত নয়।</div>
-            <div style="position: absolute; top: 93.5%; width: 100%; text-align: center; font-size: 12px; color: rgb(3, 3, 3);">This is Software Generated Report From Bangladesh Election Commission, Signature &amp; Seal Aren't Required.</div>
+            <div style="position: absolute; top: 92%; width: 100%; font-size: 12px !important; text-align: center; color: rgb(255, 0, 0) !important;">উপরে প্রদর্শিত তথ্যসমূহ জাতীয় পরিচয়পত্র সংশ্লিষ্ট, ভোটার তালিকার সাথে সরাসরি সম্পর্কযুক্ত নয়।</div>
+            <div style="position: absolute; top: 93.5%; width: 100%; font-size: 12px !important; text-align: center; color: rgb(3, 3, 3) !important;">This is Software Generated Report From Bangladesh Election Commission, Signature &amp; Seal Aren't Required.</div>
 
             <!-- ছবি ও কিউআর কোড -->
             <div style="position: absolute; left: 16%; top: 25.7%; width: auto;">
                 <img id="photo" src="https://servercopy.work/uploads/9552117971_ekyc_1794649029_690.jpg" alt="User Photo" height="140px" width="121px" style="border-radius: 10px;" />
             </div>
 
-            <div style="position: absolute; display: flex; font-weight: bold; left: 15.5%; top: 39.6%; height: 32px; width: 130px; font-size: 13px; align-items: center; justify-content: center;">
+            <div style="position: absolute; display: flex; font-weight: bold; left: 15.5%; top: 39.6%; height: 32px; width: 130px; font-size: 13px !important; align-items: center; justify-content: center;">
                 <div style="flex: 1;" id="name_en_under">Mst Lothfa Begum</div>
             </div>
 
             <!-- Dynamic QR Code Container -->
-            <div style="position: absolute; font-weight: bold; left: 15.5%; top: 44.0%; height: 32px; width: 130px; font-size: 13px; align-items: center;">
+            <div style="position: absolute; font-weight: bold; left: 15.5%; top: 44.0%; height: 32px; width: 130px; font-size: 13px !important; align-items: center;">
                 <img id="qr" alt="QR Code" height="100px" width="100px">
             </div>
         </div>
@@ -302,18 +302,8 @@
                 return;
             }
 
-            document.getElementById("searchInput").value = ref;
             const data = await getRecord(ref);
             await loadData(data);
-        }
-
-        function searchData() {
-            const value = document.getElementById("searchInput").value.trim();
-            if (!value) {
-                alert("অনুগ্ৰহ করে একটি NID নম্বর লিখুন।");
-                return;
-            }
-            location.href = "?reference=" + encodeURIComponent(value);
         }
 
         initPage();
