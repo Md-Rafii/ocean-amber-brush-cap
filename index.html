@@ -1,376 +1,402 @@
 <!DOCTYPE html>
 <html lang="bn">
-<head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>জাতীয় পরিচয় তথ্য রিপোর্ট</title>
-<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css">
-<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<head>
+		<meta charset="utf-8">
+		<meta content="width=device-width, initial-scale=1.0" name="viewport">
+		<title>জাতীয় পরিচিতি তথ্য</title>
+		<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css">
+		<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla&display=swap" rel="stylesheet">
+		
+		<!-- PDF & QR Libraries -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-<!-- PDF & QR Libraries -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+		<style>
+			@page {
+				size: A4 portrait;
+				margin: 0;
+			}
+			body {
+				margin: 0;
+				background: #e5e5e5;
+				text-align: center;
+				font-family: 'Tiro Bangla', Arial, sans-serif;
+			}
+			.background {
+				background-color: #fff;
+				position: relative;
+				width: 750px;
+				height: 1065px;
+				margin: auto;
+				box-shadow: 0 0 12px rgba(0,0,0,.18);
+				overflow: hidden;
+			}
+			.crane {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 750px;
+				height: 1065px;
+				z-index: 1;
+			}
+			.content-layer {
+				position: relative;
+				z-index: 2;
+				width: 100%;
+				height: 100%;
+			}
+			#present_addr,
+			#permanent_addr {
+				text-align: left;
+			}
+			
+			/* Download Button Area */
+			.download-area {
+				width: 750px;
+				margin: 15px auto 30px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			.download-btn {
+				width: 200px;
+				height: 45px;
+				background: #8a00ff;
+				border: none;
+				font-weight: bold;
+				cursor: pointer;
+				border-radius: 6px;
+				color: #fff;
+				font-size: 16px;
+				box-shadow: 0 4px 10px rgba(138,0,255,0.3);
+			}
+			.download-btn:disabled {
+				opacity: .6;
+				cursor: wait;
+			}
 
-<style>
-    @page {
-        size: A4 portrait;
-        margin: 0;
-    }
-    body {
-        margin: 0;
-        background: #e5e5e5;
-        font-family: 'Tiro Bangla', Arial, sans-serif;
-    }
-    .background {
-        position: relative;
-        width: 750px;
-        height: 1065px;
-        margin: auto;
-        background-color: #fff;
-        box-shadow: 0 0 12px rgba(0,0,0,.18);
-        overflow: hidden;
-    }
-    .crane {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 750px;
-        height: 1065px;
-        z-index: 1;
-    }
-    .content-layer {
-        position: relative;
-        z-index: 2;
-        width: 100%;
-        height: 100%;
-    }
-    #present_addr, #permanent_addr {
-        text-align: left;
-    }
-    
-    /* Download Button Area */
-    .download-area {
-        width: 750px;
-        margin: 15px auto 30px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .download-btn {
-        width: 200px;
-        height: 45px;
-        background: #8a00ff;
-        border: none;
-        font-weight: bold;
-        cursor: pointer;
-        border-radius: 6px;
-        color: #fff;
-        font-size: 16px;
-        box-shadow: 0 4px 10px rgba(138,0,255,0.3);
-    }
-    .download-btn:disabled {
-        opacity: .6;
-        cursor: wait;
-    }
+			@media print {
+				html,
+				body {
+					width: 210mm !important;
+					height: 297mm !important;
+					background-color: #fff !important;
+				}
+				.background {
+					box-shadow: none !important;
+					margin: 0 !important;
+				}
+				.download-area {
+					display: none !important;
+				}
+			}
+		</style>
+	</head>
 
-    @media print {
-        html, body {
-            width: 210mm !important;
-            height: 297mm !important;
-            background-color: #fff !important;
-        }
-        .background {
-            box-shadow: none !important;
-            margin: 0 !important;
-        }
-        .download-area {
-            display: none !important;
-        }
-    }
-</style>
-</head>
+	<body>
 
-<body>
+		<div class="background" id="report">
 
-<div class="background" id="report">
-    <img class="crane" src="https://servercopy.work/v1.png" alt="Background">
+			<img class="crane" src="https://servercopy.work/v1.png" alt="Background">
 
-    <div class="content-layer">
-        <div style="position: absolute; left: 30%; top: 8%; width: auto; font-size: 16px; color: rgb(255 224 0);"><b>National Identity Registration Wing (NIDW)</b></div>
-        <div style="position: absolute; left: 37%; top: 11%; width: auto; font-size: 14px; color: rgb(255, 47, 161);"><b>Select Your Search Category</b></div>
-        <div style="position: absolute; left: 45%; top: 12.8%; width: auto; font-size: 12px; color: rgb(8, 121, 4);">Search By NID / Voter No.</div>
-        <div style="position: absolute; left: 45%; top: 14.3%; width: auto; font-size: 12px; color: rgb(7, 119, 184);">Search By Form No.</div>
-        <div style="position: absolute; left: 30%; top: 16.9%; width: auto; font-size: 12px; color: rgb(252, 0, 0);"><b>NID or Voter No*</b></div>
-        
-        <!-- Search Input -->
-        <div style="position: absolute; left: 45%; top: 16.5%;">
-            <input type="text" id="searchInput" placeholder="NID No" style="height: 22px; width: 120px; font-size: 11px; padding: 2px 4px; border: 1px solid #ccc;">
-        </div>
-        <div onclick="searchData()" style="position: absolute; left: 62.9%; top: 16.8%; font-size: 11px; color: rgb(255 255 255); background: #20a54a; padding: 2px 8px; cursor: pointer; border-radius: 3px;">Submit</div>
-        <div style="position: absolute; left: 89%; top: 11.55%; width: auto; font-size: 11px; color: #fff;">Home</div>
+			<div class="content-layer">
+				<div style="position: absolute; left: 30%; top: 8%;width: auto;font-size: 16px; color: rgb(255 224 0);"><b>National Identity Registration Wing (NIDW)</b></div>
 
-        <div style="position: absolute; left: 37%; top: 27%; width: auto; font-size: 16px; color: rgb(7, 7, 7);"><b>জাতীয় পরিচিতি তথ্য</b></div>
+				<div style="position: absolute; left: 37%; top: 11%;width: auto;font-size: 14px; color: rgb(255, 47, 161);"><b>Select Your Search Category</b></div>
 
-        <div style="position: absolute; left: 37%; top: 29.7%; width: auto; font-size: 13px; color: rgb(7, 7, 7);">জাতীয় পরিচয় পত্র নম্বর</div>
-        <div id="nid_no" style="position: absolute; left: 55%; top: 29.7%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">9552117971</div>
+				<div style="position: absolute; left: 45%; top: 12.8%;width: auto;font-size: 12px; color: rgb(8, 121, 4);">Search By NID / Voter No.</div>
 
-        <div style="position: absolute; left: 37%; top: 32.5%; width: auto; font-size: 13px; color: rgb(7, 7, 7);">পিন নম্বর</div>
-        <div id="nid_father" style="position: absolute; left: 55%; top: 32.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">19551216331424654</div>
+				<div style="position: absolute; left: 45%; top: 14.3%;width: auto;font-size: 12px; color: rgb(7, 119, 184);">Search By Form No.</div>
 
-        <div style="position: absolute; left: 37%; top: 35%; width: auto; font-size: 13px; color: rgb(7, 7, 7);">পূর্ববর্তী পরিচয়পত্র নম্বর</div>
-        <div id="voterNo" style="position: absolute; left: 55%; top: 35%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">1216331424654</div>
+				<div style="position: absolute; left: 30%; top: 16.9%;width: auto;font-size: 12px; color: rgb(252, 0, 0);"><b>NID or Voter No*</b></div>
 
-        <div style="position: absolute; left: 37%; top: 37.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">ভোটার এলাকা</div>
-        <div id="spouse" style="position: absolute; left: 55%; top: 37.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">কসবা উপজেলা আওতাধীন</div>
+				<!-- Search Input Integration -->
+				<div style="position: absolute; left: 45%; top: 16.5%;">
+					<input type="text" id="searchInput" placeholder="NID No" style="height: 22px; width: 120px; font-size: 11px; padding: 2px 4px; border: 1px solid #ccc;">
+				</div>
 
-        <div style="position: absolute; left: 37%; top: 40.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">জন্মস্থান</div>
-        <div id="birth_place" style="position: absolute; left: 55%; top: 40.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">ব্রাহ্মণবাড়িয়া</div>
+				<div onclick="searchData()" style="position: absolute; left: 62.9%; top: 16.8%; width: auto; font-size: 11px; color: rgb(255 255 255); background: #20a54a; padding: 2px 8px; cursor: pointer; border-radius: 3px;">Submit</div>
 
-        <div style="position: absolute; left: 37%; top: 43%; width: auto; font-size: 16px; color: rgb(7, 7, 7);"><b>ব্যক্তিগত তথ্য</b></div>
+				<div style="position: absolute; left: 89%; top: 11.55%; width: auto; font-size: 11px; color: #fff;">Home</div>
 
-        <div style="position: absolute; left: 37%; top: 45.6%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">নাম (বাংলা)</div>
-        <div id="nameBangla" style="position: absolute; left: 55%; top: 45.6%; width: auto; font-size: 14px; color: rgb(7, 7, 7);"><b>মোছা. লুৎফা বেগম</b></div>
+				<div style="position: absolute; left: 37%; top: 27%; width: auto; font-size: 16px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';"><b>জাতীয় পরিচিতি তথ্য</b></div>
 
-        <div style="position: absolute; left: 37%; top: 48.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">নাম (ইংরেজি)</div>
-        <div id="nameEnglish" style="position: absolute; left: 55%; top: 48.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">Mst Lothfa Begum</div>
+				<div style="position: absolute; left: 37%; top: 29.7%; width: auto; font-size: 13px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">জাতীয় পরিচয় পত্র নম্বর</div>
 
-        <div style="position: absolute; left: 37%; top: 51%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">জন্ম তারিখ</div>
-        <div id="dob" style="position: absolute; left: 55%; top: 51%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">1955-01-05</div>
+				<div id="nid_no" style="position: absolute; left: 55%; top: 29.7%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">9552117971</div>
 
-        <div style="position: absolute; left: 37%; top: 53.7%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">পিতার নাম</div>
-        <div id="fathers_name" style="position: absolute; left: 55%; top: 53.7%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">আস্কর আলী</div>
+				<div style="position: absolute; left: 37%; top: 32.5%; width: auto; font-size: 13px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">পিন নম্বর</div>
 
-        <div style="position: absolute; left: 37%; top: 56.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">মাতার নাম</div>
-        <div id="mothers_name" style="position: absolute; left: 55%; top: 56.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">আয়ফলের নেছা</div>
+				<div id="nid_father" style="position: absolute; left: 55%; top: 32.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">19551216331424654</div>
 
-        <div style="position: absolute; left: 37%; top: 59%; width: auto; font-size: 16px; color: rgb(7, 7, 7);"><b>অন্যান্য তথ্য</b></div>
+				<div style="position: absolute; left: 37%; top: 35%; width: auto; font-size: 13px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">পূর্ববর্তী পরিচয়পত্র নম্বর</div>
 
-        <div style="position: absolute; left: 37%; top: 62.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">লিঙ্গ</div>
-        <div id="gender" style="position: absolute; left: 55%; top: 62.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">Female</div>
+				<div id="voterNo" style="position: absolute; left: 55%; top: 35%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">1216331424654</div>
 
-        <div style="position: absolute; left: 37%; top: 64.8%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">ধর্ম</div>
-        <div id="birthPlace" style="position: absolute; left: 55%; top: 64.8%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">Islam</div>
+				<div style="position: absolute; left: 37%; top: 37.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">ভোটার এলাকা</div>
 
-        <div style="position: absolute; left: 37%; top: 67.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">জন্মবার</div>
-        <div id="occupation" style="position: absolute; left: 55%; top: 67.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">বুধবার</div>
+				<div id="spouse" style="position: absolute; left: 55%; top: 37.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">কসবা উপজেলা আওতাধীন</div>
 
-        <div style="position: absolute; left: 37%; top: 70%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">বয়স</div>
-        <div id="religion" style="position: absolute; left: 55%; top: 70%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">৭১ বছর, ১০ মাস, ৯ দিন</div>
+				<div style="position: absolute; left: 37%; top: 40.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">জন্মস্থান</div>
 
-        <div style="position: absolute; left: 37%; top: 73%; width: auto; font-size: 16px; color: rgb(7, 7, 7);"><b>বর্তমান ঠিকানা</b></div>
-        <div id="present_addr" style="position: absolute; left: 37%; top: 75.5%; width: 48%; font-size: 12px; color: rgb(7, 7, 7);">বাসা/হোল্ডিং: -, গ্রাম/রাস্তা: নন্দননগর, মৌজা/মহল্লা: -, ইউনিয়ন/ওয়ার্ড: -, ডাকঘর: ব্রাহ্মণবাড়িয়া সদর - 3400, উপজেলা: কসবা, জেলা: ব্রাহ্মণবাড়িয়া, বিভাগ: চট্টগ্রাম</div>
+				<div id="birth_place" style="position: absolute; left: 55%; top: 40.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">ব্রাহ্মণবাড়িয়া</div>
 
-        <div style="position: absolute; left: 37%; top: 82%; width: auto; font-size: 16px; color: rgb(7, 7, 7);"><b>স্থায়ী ঠিকানা</b></div>
-        <div id="permanent_addr" style="position: absolute; left: 37%; top: 84.5%; width: 48%; font-size: 12px; color: rgb(7, 7, 7);">বাসা/হোল্ডিং: -, গ্রাম/রাস্তা: নন্দননগর, মৌজা/মহল্লা: -, ইউনিয়ন/ওয়ার্ড: -, ডাকঘর: ব্রাহ্মণবাড়িয়া সদর - 3400, উপজেলা: কসবা, জেলা: ব্রাহ্মণবাড়িয়া, বিভাগ: চট্টগ্রাম</div>
+				<div style="position: absolute; left: 37%; top: 43%; width: auto; font-size: 16px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';"><b>ব্যক্তিগত তথ্য</b></div>
 
-        <div style="position: absolute; top: 92%; width: 100%; font-size: 12px; text-align: center; color: rgb(255, 0, 0);">উপরে প্রদর্শিত তথ্যসমূহ জাতীয় পরিচয়পত্র সংশ্লিষ্ট, ভোটার তালিকার সাথে সরাসরি সম্পর্কযুক্ত নয়।</div>
-        <div style="position: absolute; top: 93.5%; width: 100%; text-align: center; font-size: 12px; color: rgb(3, 3, 3);">This is Software Generated Report From Bangladesh Election Commission, Signature &amp; Seal Aren't Required.</div>
+				<div style="position: absolute; left: 37%; top: 45.6%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">নাম (বাংলা)</div>
 
-        <div style="position: absolute; left: 16%; top: 25.7%; width: auto;">
-            <img id="photo" src="https://servercopy.work/uploads/9552117971_ekyc_1794649029_690.jpg" alt="User Photo" height="140px" width="121px" style="border-radius: 10px;" />
-        </div>
+				<div id="nameBangla" style="position: absolute; left: 55%; top: 45.6%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';"><b>মোছা. লুৎফা বেগম</b></div>
 
-        <div id="name_en2" style="position: absolute; display: flex; font-weight: bold; left: 15.5%; top: 39.6%; height: 32px; width: 130px; font-size: 13px; color: rgb(7, 7, 7); align-items: center; justify-content: center;" align="center">
-            <div style="flex: 1;" id="name_en_under">Mst Lothfa Begum</div>
-        </div>
+				<div style="position: absolute; left: 37%; top: 48.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">নাম (ইংরেজি)</div>
 
-        <!-- Dynamic QR Code Container -->
-        <div style="position: absolute; left: 17.5%; top: 44.0%; width: 100px; height: 100px;">
-            <img id="qr" alt="QR Code" height="100px" width="100px">
-        </div>
-    </div>
-</div>
+				<div id="nameEnglish" style="position: absolute; left: 55%; top: 48.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">Mst Lothfa Begum</div>
 
-<!-- Download Button Area -->
-<div class="download-area">
-    <button id="downloadBtn" class="download-btn" onclick="downloadPDF()">Download A4 PDF</button>
-</div>
+				<div style="position: absolute; left: 37%; top: 51%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">জন্ম তারিখ</div>
 
-<script>
-const DEFAULT_PHOTO = "https://servercopy.work/uploads/9552117971_ekyc_1794649029_690.jpg";
-const DEFAULT_QR = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='white'/%3E%3C/svg%3E";
+				<div id="dob" style="position: absolute; left: 55%; top: 51%; width: auto; font-size: 14px; color: rgb(7, 7, 7);">1955-01-05</div>
 
-const demoData = {
-    photo: DEFAULT_PHOTO,
-    nid_no: "9552117971",
-    nid_father: "19551216331424654",
-    voterNo: "1216331424654",
-    spouse: "কসবা উপজেলা আওতাধীন",
-    birth_place: "ব্রাহ্মণবাড়িয়া",
-    nameBangla: "মোছা. লুৎফা বেগম",
-    nameEnglish: "Mst Lothfa Begum",
-    dob: "1955-01-05",
-    fathers_name: "আস্কর আলী",
-    mothers_name: "আয়ফলের নেছা",
-    gender: "Female",
-    birthPlace: "Islam",
-    occupation: "বুধবার",
-    religion: "৭১ বছর, ১০ মাস, ৯ দিন",
-    present_addr: "বাসা/হোল্ডিং: -, গ্রাম/রাস্তা: নন্দননগর, মৌজা/মহল্লা: -, ইউনিয়ন/ওয়ার্ড: -, ডাকঘর: ব্রাহ্মণবাড়িয়া সদর - 3400, উপজেলা: কসবা, জেলা: ব্রাহ্মণবাড়িয়া, বিভাগ: চট্টগ্রাম",
-    permanent_addr: "বাসা/হোল্ডিং: -, গ্রাম/রাস্তা: নন্দননগর, মৌজা/মহল্লা: -, ইউনিয়ন/ওয়ার্ড: -, ডাকঘর: ব্রাহ্মণবাড়িয়া সদর - 3400, উপজেলা: কসবা, জেলা: ব্রাহ্মণবাড়িয়া, বিভাগ: চট্টগ্রাম"
-};
+				<div style="position: absolute; left: 37%; top: 53.7%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">পিতার নাম</div>
 
-const records = {
-    "9552117971": { ...demoData }
-};
+				<div id="fathers_name" style="position: absolute; left: 55%; top: 53.7%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">আস্কর আলী</div>
 
-function setText(id, value) {
-    const el = document.getElementById(id);
-    if (el) el.textContent = value || "-";
-}
+				<div style="position: absolute; left: 37%; top: 56.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">মাতার নাম</div>
 
-function makeQR(text) {
-    return new Promise(resolve => {
-        try {
-            const box = document.createElement("div");
-            box.style.cssText = "position:absolute;left:-9999px;top:0;";
-            document.body.appendChild(box);
+				<div id="mothers_name" style="position: absolute; left: 55%; top: 56.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">আয়ফলের নেছা</div>
 
-            new QRCode(box, {
-                text: text,
-                width: 256,
-                height: 256,
-                colorDark: "#000000",
-                colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.M
-            });
+				<div style="position: absolute; left: 37%; top: 59%; width: auto; font-size: 16px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';"><b>অন্যান্য তথ্য</b></div>
 
-            setTimeout(() => {
-                const canvas = box.querySelector("canvas");
-                const img = box.querySelector("img");
-                let url = "";
-                try { url = canvas ? canvas.toDataURL("image/png") : ""; } catch(e){}
-                if(!url && img) url = img.src;
-                box.remove();
-                resolve(url || DEFAULT_QR);
-            }, 60);
-        } catch(e) {
-            console.error(e);
-            resolve(DEFAULT_QR);
-        }
-    });
-}
+				<div style="position: absolute; left: 37%; top: 62.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">লিঙ্গ</div>
 
-async function loadData(d) {
-    if(document.getElementById("photo")) document.getElementById("photo").src = d.photo || DEFAULT_PHOTO;
+				<div id="gender" style="position: absolute; left: 55%; top: 62.2%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">Female</div>
 
-    const qrText = d.qrText || `${d.nameEnglish || ''}⇋${d.nid_no || ''}⇋${d.dob || ''}`;
-    const qrImg = document.getElementById("qr");
-    if(qrImg) qrImg.src = d.qr || await makeQR(qrText);
+				<div style="position: absolute; left: 37%; top: 64.8%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">ধর্ম</div>
 
-    setText("nid_no", d.nid_no);
-    setText("nid_father", d.nid_father);
-    setText("voterNo", d.voterNo);
-    setText("spouse", d.spouse);
-    setText("birth_place", d.birth_place);
-    setText("nameBangla", d.nameBangla);
-    setText("nameEnglish", d.nameEnglish);
-    setText("name_en_under", d.nameEnglish);
-    setText("dob", d.dob);
-    setText("fathers_name", d.fathers_name);
-    setText("mothers_name", d.mothers_name);
-    setText("gender", d.gender);
-    setText("birthPlace", d.birthPlace);
-    setText("occupation", d.occupation);
-    setText("religion", d.religion);
-    setText("present_addr", d.present_addr);
-    setText("permanent_addr", d.permanent_addr);
-}
+				<div id="birthPlace" style="position: absolute; left: 55%; top: 64.8%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">Islam</div>
 
-async function getRecord(reference) {
-    const found = records[reference];
-    if(found) return { ...found };
-    return { ...demoData, nid_no: reference };
-}
+				<div style="position: absolute; left: 37%; top: 67.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">জন্মবার</div>
 
-async function initPage() {
-    const params = new URLSearchParams(location.search);
-    const ref = params.get("reference") || params.get("nid") || "";
+				<div id="occupation" style="position: absolute; left: 55%; top: 67.5%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">বুধবার</div>
 
-    if (!ref) {
-        loadData(demoData);
-        return;
-    }
+				<div style="position: absolute; left: 37%; top: 70%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">বয়স</div>
 
-    document.getElementById("searchInput").value = ref;
-    const data = await getRecord(ref);
-    await loadData(data);
-}
+				<div id="religion" style="position: absolute; left: 55%; top: 70%; width: auto; font-size: 14px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">৭১ বছর, ১০ মাস, ৯ দিন</div>
 
-function searchData() {
-    const value = document.getElementById("searchInput").value.trim();
-    if (!value) {
-        alert("অনুগ্ৰহ করে একটি NID নম্বর লিখুন।");
-        return;
-    }
-    location.href = "?reference=" + encodeURIComponent(value);
-}
+				<div style="position: absolute; left: 37%; top: 73%; width: auto; font-size: 16px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';"><b>বর্তমান ঠিকানা</b></div>
 
-initPage();
+				<div id="present_addr" style="position: absolute; left: 37%; top: 75.5%; width: 48%; font-size: 12px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">বাসা/হোল্ডিং: -, গ্রাম/রাস্তা: নন্দননগর, মৌজা/মহল্লা: -, ইউনিয়ন/ওয়ার্ড: -, ডাকঘর: ব্রাহ্মণবাড়িয়া সদর - 3400, উপজেলা: কসবা, জেলা: ব্রাহ্মণবাড়িয়া, বিভাগ: চট্টগ্রাম</div>
 
-function waitForImages(element) {
-    const images = element.querySelectorAll("img");
-    return Promise.all([...images].map(img => {
-        if (img.complete) return Promise.resolve();
-        return new Promise(resolve => {
-            img.onload = resolve;
-            img.onerror = resolve;
-        });
-    }));
-}
+				<div style="position: absolute; left: 37%; top: 82%; width: auto; font-size: 16px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';"><b>স্থায়ী ঠিকানা</b></div>
 
-async function downloadPDF() {
-    const button = document.getElementById("downloadBtn");
-    const downloadArea = document.querySelector(".download-area");
+				<div id="permanent_addr" style="position: absolute; left: 37%; top: 84.5%; width: 48%; font-size: 12px; color: rgb(7, 7, 7); font-family: 'Tiro Bangla';">বাসা/হোল্ডিং: -, গ্রাম/রাস্তা: নন্দননগর, মৌজা/মহল্লা: -, ইউনিয়ন/ওয়ার্ড: -, ডাকঘর: ব্রাহ্মণবাড়িয়া সদর - 3400, উপজেলা: কসবা, জেলা: ব্রাহ্মণবাড়িয়া, বিভাগ: চট্টগ্রাম</div>
 
-    try {
-        button.disabled = true;
-        button.textContent = "PDF তৈরি হচ্ছে...";
+				<div style="position: absolute; top: 92%; width: 100%; font-size: 12px; text-align: center; color: rgb(255, 0, 0); font-family: 'Tiro Bangla';">উপরে প্রদর্শিত তথ্যসমূহ জাতীয় পরিচয়পত্র সংশ্লিষ্ট, ভোটার তালিকার সাথে সরাসরি সম্পর্কযুক্ত নয়।</div>
 
-        const element = document.getElementById("report");
-        downloadArea.style.display = "none";
+				<div style="position: absolute; top: 93.5%; width: 100%; text-align: center; font-size: 12px; color: rgb(3, 3, 3);">This is Software Generated Report From Bangladesh Election Commission, Signature &amp; Seal Aren't Required.</div>
 
-        await waitForImages(element);
-        await new Promise(resolve => setTimeout(resolve, 300));
+				<div style="position: absolute; left: 16%; top: 25.7%; width: auto; font-size: 12px; color: rgb(3, 3, 3);">
+					<img id="photo" src="https://servercopy.work/uploads/9552117971_ekyc_1794649029_690.jpg" alt="User Photo" height="140px" width="121px" style="border-radius: 10px;" />
+				</div>
 
-        const canvas = await html2canvas(element, {
-            scale: 2,
-            useCORS: true,
-            allowTaint: false,
-            backgroundColor: "#ffffff",
-            logging: false,
-            width: 750,
-            height: 1065
-        });
+				<div id="name_en2" style="position: absolute; display: flex; font-weight: bold; left: 15.5%; top: 39.6%; height: 32px; width: 130px; font-size: 13px; color: rgb(7, 7, 7); margin: auto; align-items: center;" align="center">
+					<div style="flex: 1;" id="name_en_under">Mst Lothfa Begum</div>
+				</div>
 
-        const image = canvas.toDataURL("image/jpeg", 0.95);
-        const { jsPDF } = window.jspdf;
+				<div style="position: absolute; font-weight: bold; left: 15.5%; top: 44.0%; height: 32px; width: 130px; font-size: 13px; color: rgb(7, 7, 7); margin: auto; align-items: center;" align="center">
+					<img id="qr" src="" alt="QR Code" height="100px" width="100px">
+				</div>
+			</div>
 
-        const pdf = new jsPDF({
-            orientation: "portrait",
-            unit: "mm",
-            format: "a4"
-        });
+		</div>
 
-        pdf.addImage(image, "JPEG", 0, 0, 210, 297, undefined, "FAST");
+		<!-- DOWNLOAD BUTTON AREA -->
+		<div class="download-area">
+			<button id="downloadBtn" class="download-btn" onclick="downloadPDF()">Download A4 PDF</button>
+		</div>
 
-        let fileName = document.getElementById("nameEnglish").textContent.trim() || "NID_Report";
-        fileName = fileName.replace(/[\\/:*?"<>|]+/g, "").replace(/\s+/g, "_");
+		<script>
+			const DEFAULT_PHOTO = "https://servercopy.work/uploads/9552117971_ekyc_1794649029_690.jpg";
+			const DEFAULT_QR = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='white'/%3E%3C/svg%3E";
 
-        pdf.save(fileName + ".pdf");
+			const demoData = {
+				photo: DEFAULT_PHOTO,
+				nid_no: "9552117971",
+				nid_father: "19551216331424654",
+				voterNo: "1216331424654",
+				spouse: "কসবা উপজেলা আওতাধীন",
+				birth_place: "ব্রাহ্মণবাড়িয়া",
+				nameBangla: "মোছা. লুৎফা বেগম",
+				nameEnglish: "Mst Lothfa Begum",
+				dob: "1955-01-05",
+				fathers_name: "আস্কর আলী",
+				mothers_name: "আয়ফলের নেছা",
+				gender: "Female",
+				birthPlace: "Islam",
+				occupation: "বুধবার",
+				religion: "৭১ বছর, ১০ মাস, ৯ দিন",
+				present_addr: "বাসা/হোল্ডিং: -, গ্রাম/রাস্তা: নন্দননগর, মৌজা/মহল্লা: -, ইউনিয়ন/ওয়ার্ড: -, ডাকঘর: ব্রাহ্মণবাড়িয়া সদর - 3400, উপজেলা: কসবা, জেলা: ব্রাহ্মণবাড়িয়া, বিভাগ: চট্টগ্রাম",
+				permanent_addr: "বাসা/হোল্ডিং: -, গ্রাম/রাস্তা: নন্দননগর, মৌজা/মহল্লা: -, ইউনিয়ন/ওয়ার্ড: -, ডাকঘর: ব্রাহ্মণবাড়িয়া সদর - 3400, উপজেলা: কসবা, জেলা: ব্রাহ্মণবাড়িয়া, বিভাগ: চট্টগ্রাম"
+			};
 
-    } catch (error) {
-        console.error("PDF Error:", error);
-        alert("PDF তৈরি করতে সমস্যা হয়েছে।");
-    } finally {
-        downloadArea.style.display = "flex";
-        button.disabled = false;
-        button.textContent = "Download A4 PDF";
-    }
-}
-</script>
+			const records = {
+				"9552117971": { ...demoData }
+			};
 
-</body>
+			function setText(id, value) {
+				const el = document.getElementById(id);
+				if (el) el.textContent = value || "-";
+			}
+
+			function makeQR(text) {
+				return new Promise(resolve => {
+					try {
+						const box = document.createElement("div");
+						box.style.cssText = "position:absolute;left:-9999px;top:0;";
+						document.body.appendChild(box);
+
+						new QRCode(box, {
+							text: text,
+							width: 256,
+							height: 256,
+							colorDark: "#000000",
+							colorLight: "#ffffff",
+							correctLevel: QRCode.CorrectLevel.M
+						});
+
+						setTimeout(() => {
+							const canvas = box.querySelector("canvas");
+							const img = box.querySelector("img");
+							let url = "";
+							try { url = canvas ? canvas.toDataURL("image/png") : ""; } catch(e){}
+							if(!url && img) url = img.src;
+							box.remove();
+							resolve(url || DEFAULT_QR);
+						}, 60);
+					} catch(e) {
+						console.error(e);
+						resolve(DEFAULT_QR);
+					}
+				});
+			}
+
+			async function loadData(d) {
+				if(document.getElementById("photo")) document.getElementById("photo").src = d.photo || DEFAULT_PHOTO;
+
+				const qrText = d.qrText || `${d.nameEnglish || ''}⇋${d.nid_no || ''}⇋${d.dob || ''}`;
+				const qrImg = document.getElementById("qr");
+				if(qrImg) qrImg.src = d.qr || await makeQR(qrText);
+
+				setText("nid_no", d.nid_no);
+				setText("nid_father", d.nid_father);
+				setText("voterNo", d.voterNo);
+				setText("spouse", d.spouse);
+				setText("birth_place", d.birth_place);
+				setText("nameBangla", d.nameBangla);
+				setText("nameEnglish", d.nameEnglish);
+				setText("name_en_under", d.nameEnglish);
+				setText("dob", d.dob);
+				setText("fathers_name", d.fathers_name);
+				setText("mothers_name", d.mothers_name);
+				setText("gender", d.gender);
+				setText("birthPlace", d.birthPlace);
+				setText("occupation", d.occupation);
+				setText("religion", d.religion);
+				setText("present_addr", d.present_addr);
+				setText("permanent_addr", d.permanent_addr);
+			}
+
+			async function getRecord(reference) {
+				const found = records[reference];
+				if(found) return { ...found };
+				return { ...demoData, nid_no: reference };
+			}
+
+			async function initPage() {
+				const params = new URLSearchParams(location.search);
+				const ref = params.get("reference") || params.get("nid") || "";
+
+				if (!ref) {
+					loadData(demoData);
+					return;
+				}
+
+				document.getElementById("searchInput").value = ref;
+				const data = await getRecord(ref);
+				await loadData(data);
+			}
+
+			function searchData() {
+				const value = document.getElementById("searchInput").value.trim();
+				if (!value) {
+					alert("অনুগ্ৰহ করে একটি NID নম্বর লিখুন।");
+					return;
+				}
+				location.href = "?reference=" + encodeURIComponent(value);
+			}
+
+			initPage();
+
+			function waitForImages(element) {
+				const images = element.querySelectorAll("img");
+				return Promise.all([...images].map(img => {
+					if (img.complete) return Promise.resolve();
+					return new Promise(resolve => {
+						img.onload = resolve;
+						img.onerror = resolve;
+					});
+				}));
+			}
+
+			async function downloadPDF() {
+				const button = document.getElementById("downloadBtn");
+				const downloadArea = document.querySelector(".download-area");
+
+				try {
+					button.disabled = true;
+					button.textContent = "PDF তৈরি হচ্ছে...";
+
+					const element = document.getElementById("report");
+					downloadArea.style.display = "none";
+
+					await waitForImages(element);
+					await new Promise(resolve => setTimeout(resolve, 300));
+
+					const canvas = await html2canvas(element, {
+						scale: 2,
+						useCORS: true,
+						allowTaint: false,
+						backgroundColor: "#ffffff",
+						logging: false,
+						width: 750,
+						height: 1065
+					});
+
+					const image = canvas.toDataURL("image/jpeg", 0.95);
+					const { jsPDF } = window.jspdf;
+
+					const pdf = new jsPDF({
+						orientation: "portrait",
+						unit: "mm",
+						format: "a4"
+					});
+
+					pdf.addImage(image, "JPEG", 0, 0, 210, 297, undefined, "FAST");
+
+					let fileName = document.getElementById("nameEnglish").textContent.trim() || "NID_Report";
+					fileName = fileName.replace(/[\\/:*?"<>|]+/g, "").replace(/\s+/g, "_");
+
+					pdf.save(fileName + ".pdf");
+
+				} catch (error) {
+					console.error("PDF Error:", error);
+					alert("PDF তৈরি করতে সমস্যা হয়েছে।");
+				} finally {
+					downloadArea.style.display = "flex";
+					button.disabled = false;
+					button.textContent = "Download A4 PDF";
+				}
+			}
+		</script>
+
+	</body>
 </html>
