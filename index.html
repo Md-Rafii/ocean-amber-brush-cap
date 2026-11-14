@@ -46,7 +46,7 @@
             height: 100%;
         }
 
-        /* সব লেখার ফন্ট, সাইজ এবং লাইন-হাইট একদম সমান রাখার জন্য */
+        /* সমস্ত লেখা ও নাম্বারের সাইজ এক ও সুনির্দিষ্ট করার জন্য */
         .content-layer div[style*="position: absolute"] {
             font-family: 'Tiro Bangla', Arial, sans-serif !important;
             font-size: 14px !important;
@@ -102,65 +102,66 @@
         <img class="crane" src="https://servercopy.work/v1.png" alt="Background">
 
         <div class="content-layer">
-            <!-- টপ হেডার টেক্সট -->
+            <!-- টপ হেডার টেক্সট ও সাবমিট বাটন -->
             <div style="position: absolute; left: 30%; top: 8%; width: auto; font-size: 16px !important; color: rgb(255 224 0) !important;"><b>National Identity Registration Wing (NIDW)</b></div>
             <div style="position: absolute; left: 37%; top: 11%; width: auto; font-size: 14px !important; color: rgb(255, 47, 161) !important;"><b>Select Your Search Category</b></div>
             <div style="position: absolute; left: 45%; top: 12.8%; width: auto; font-size: 12px !important; color: rgb(8, 121, 4) !important;">Search By NID / Voter No.</div>
             <div style="position: absolute; left: 45%; top: 14.3%; width: auto; font-size: 12px !important; color: rgb(7, 119, 184) !important;">Search By Form No.</div>
             <div style="position: absolute; left: 30%; top: 16.9%; width: auto; font-size: 12px !important; color: rgb(252, 0, 0) !important;"><b>NID or Voter No*</b></div>
             <div style="position: absolute; left: 45%; top: 16.9%; width: auto; font-size: 12px !important; color: rgb(143, 143, 143) !important;">NID</div>
+            <div style="position: absolute; left: 62.9%; top: 17.1%; width: auto; font-size: 11px !important; color: rgb(255 255 255) !important;"><b>Submit</b></div>
             <div style="position: absolute; left: 89%; top: 11.55%; width: auto; font-size: 11px !important; color: #fff !important;">Home</div>
 
             <!-- জাতীয় পরিচিতি তথ্য -->
             <div style="position: absolute; left: 37%; top: 27%; width: auto; font-size: 16px !important;"><b>জাতীয় পরিচিতি তথ্য</b></div>
 
             <div style="position: absolute; left: 37%; top: 29.7%; width: auto; font-size: 13px !important;">জাতীয় পরিচয় পত্র নম্বর</div>
-            <div id="nid_no" style="position: absolute; left: 55%; top: 29.7%; width: auto;">9552117971</div>
+            <div id="nid_no" style="position: absolute; left: 55%; top: 29.7%; width: auto; font-size: 14px !important;">9552117971</div>
 
             <div style="position: absolute; left: 37%; top: 32.5%; width: auto; font-size: 13px !important;">পিন নম্বর</div>
-            <div id="nid_father" style="position: absolute; left: 55%; top: 32.5%; width: auto;">19551216331424654</div>
+            <div id="nid_father" style="position: absolute; left: 55%; top: 32.5%; width: auto; font-size: 14px !important;">19551216331424654</div>
 
             <div style="position: absolute; left: 37%; top: 35%; width: auto; font-size: 13px !important;">পূর্ববর্তী পরিচয়পত্র নম্বর</div>
-            <div id="voterNo" style="position: absolute; left: 55%; top: 35%; width: auto;">1216331424654</div>
+            <div id="voterNo" style="position: absolute; left: 55%; top: 35%; width: auto; font-size: 14px !important;">1216331424654</div>
 
-            <div style="position: absolute; left: 37%; top: 37.5%; width: auto;">ভোটার এলাকা</div>
-            <div id="spouse" style="position: absolute; left: 55%; top: 37.5%; width: auto;">কসবা উপজেলা আওতাধীন</div>
+            <div style="position: absolute; left: 37%; top: 37.5%; width: auto; font-size: 14px !important;">ভোটার এলাকা</div>
+            <div id="spouse" style="position: absolute; left: 55%; top: 37.5%; width: auto; font-size: 14px !important;">কসবা উপজেলা আওতাধীন</div>
 
-            <div style="position: absolute; left: 37%; top: 40.2%; width: auto;">জন্মস্থান</div>
-            <div id="birth_place" style="position: absolute; left: 55%; top: 40.2%; width: auto;">ব্রাহ্মণবাড়িয়া</div>
+            <div style="position: absolute; left: 37%; top: 40.2%; width: auto; font-size: 14px !important;">জন্মস্থান</div>
+            <div id="birth_place" style="position: absolute; left: 55%; top: 40.2%; width: auto; font-size: 14px !important;">ব্রাহ্মণবাড়িয়া</div>
 
             <!-- ব্যক্তিগত তথ্য -->
             <div style="position: absolute; left: 37%; top: 43%; width: auto; font-size: 16px !important;"><b>ব্যক্তিগত তথ্য</b></div>
 
-            <div style="position: absolute; left: 37%; top: 45.6%; width: auto;">নাম (বাংলা)</div>
-            <div id="nameBangla" style="position: absolute; left: 55%; top: 45.6%; width: auto;"><b>মোছা. লুৎফা বেগম</b></div>
+            <div style="position: absolute; left: 37%; top: 45.6%; width: auto; font-size: 14px !important;">নাম (বাংলা)</div>
+            <div id="nameBangla" style="position: absolute; left: 55%; top: 45.6%; width: auto; font-size: 14px !important;"><b>মোছা. লুৎফা বেগম</b></div>
 
-            <div style="position: absolute; left: 37%; top: 48.5%; width: auto;">নাম (ইংরেজি)</div>
-            <div id="nameEnglish" style="position: absolute; left: 55%; top: 48.5%; width: auto;">Mst Lothfa Begum</div>
+            <div style="position: absolute; left: 37%; top: 48.5%; width: auto; font-size: 14px !important;">নাম (ইংরেজি)</div>
+            <div id="nameEnglish" style="position: absolute; left: 55%; top: 48.5%; width: auto; font-size: 14px !important;">Mst Lothfa Begum</div>
 
-            <div style="position: absolute; left: 37%; top: 51%; width: auto;">জন্ম তারিখ</div>
-            <div id="dob" style="position: absolute; left: 55%; top: 51%; width: auto;">1955-01-05</div>
+            <div style="position: absolute; left: 37%; top: 51%; width: auto; font-size: 14px !important;">জন্ম তারিখ</div>
+            <div id="dob" style="position: absolute; left: 55%; top: 51%; width: auto; font-size: 14px !important;">1955-01-05</div>
 
-            <div style="position: absolute; left: 37%; top: 53.7%; width: auto;">পিতার নাম</div>
-            <div id="fathers_name" style="position: absolute; left: 55%; top: 53.7%; width: auto;">আস্কর আলী</div>
+            <div style="position: absolute; left: 37%; top: 53.7%; width: auto; font-size: 14px !important;">পিতার নাম</div>
+            <div id="fathers_name" style="position: absolute; left: 55%; top: 53.7%; width: auto; font-size: 14px !important;">আস্কর আলী</div>
 
-            <div style="position: absolute; left: 37%; top: 56.2%; width: auto;">মাতার নাম</div>
-            <div id="mothers_name" style="position: absolute; left: 55%; top: 56.2%; width: auto;">আয়ফলের নেছা</div>
+            <div style="position: absolute; left: 37%; top: 56.2%; width: auto; font-size: 14px !important;">মাতার নাম</div>
+            <div id="mothers_name" style="position: absolute; left: 55%; top: 56.2%; width: auto; font-size: 14px !important;">আয়ফলের নেছা</div>
 
             <!-- অন্যান্য তথ্য -->
             <div style="position: absolute; left: 37%; top: 59%; width: auto; font-size: 16px !important;"><b>অন্যান্য তথ্য</b></div>
 
-            <div style="position: absolute; left: 37%; top: 62.2%; width: auto;">লিঙ্গ</div>
-            <div id="gender" style="position: absolute; left: 55%; top: 62.2%; width: auto;">Female</div>
+            <div style="position: absolute; left: 37%; top: 62.2%; width: auto; font-size: 14px !important;">লিঙ্গ</div>
+            <div id="gender" style="position: absolute; left: 55%; top: 62.2%; width: auto; font-size: 14px !important;">Female</div>
 
-            <div style="position: absolute; left: 37%; top: 64.8%; width: auto;">ধর্ম</div>
-            <div id="birthPlace" style="position: absolute; left: 55%; top: 64.8%; width: auto;">Islam</div>
+            <div style="position: absolute; left: 37%; top: 64.8%; width: auto; font-size: 14px !important;">ধর্ম</div>
+            <div id="birthPlace" style="position: absolute; left: 55%; top: 64.8%; width: auto; font-size: 14px !important;">Islam</div>
 
-            <div style="position: absolute; left: 37%; top: 67.5%; width: auto;">জন্মবার</div>
-            <div id="occupation" style="position: absolute; left: 55%; top: 67.5%; width: auto;">বুধবার</div>
+            <div style="position: absolute; left: 37%; top: 67.5%; width: auto; font-size: 14px !important;">জন্মবার</div>
+            <div id="occupation" style="position: absolute; left: 55%; top: 67.5%; width: auto; font-size: 14px !important;">বুধবার</div>
 
-            <div style="position: absolute; left: 37%; top: 70%; width: auto;">বয়স</div>
-            <div id="religion" style="position: absolute; left: 55%; top: 70%; width: auto;">৭১ বছর, ১০ মাস, ৯ দিন</div>
+            <div style="position: absolute; left: 37%; top: 70%; width: auto; font-size: 14px !important;">বয়স</div>
+            <div id="religion" style="position: absolute; left: 55%; top: 70%; width: auto; font-size: 14px !important;">৭১ বছর, ১০ মাস, ৯ দিন</div>
 
             <!-- ঠিকানা -->
             <div style="position: absolute; left: 37%; top: 73%; width: auto; font-size: 16px !important;"><b>বর্তমান ঠিকানা</b></div>
